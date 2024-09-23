@@ -2,10 +2,17 @@ const { FusesPlugin } = require('@electron-forge/plugin-fuses');
 const { FuseV1Options, FuseVersion } = require('@electron/fuses');
 
 module.exports = {
-  packagerConfig: {
-    asar: true,
-  },
   rebuildConfig: {},
+  packagerConfig: {
+    name: 'CollarID App',
+    asar: true,
+    osxSign: {},
+    osxNotarize: {
+      appleId: process.env.APPLE_ID,
+      appleIdPassword: process.env.APPLE_PASSWORD,
+      teamId: process.env.APPLE_TEAM_ID
+    }
+  },
   makers: [
     {
       name: '@electron-forge/maker-dmg',

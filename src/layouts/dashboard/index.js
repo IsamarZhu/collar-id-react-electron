@@ -60,9 +60,183 @@ import { lineChartOptionsDashboard } from "layouts/dashboard/data/lineChartOptio
 import { barChartDataDashboard } from "layouts/dashboard/data/barChartData";
 import { barChartOptionsDashboard } from "layouts/dashboard/data/barChartOptions";
 
+
+
+// const { ipcRenderer } = window.require('electron');
+import { useEffect, useState, useRef } from "react";
+
+function getEpochFromLong(longObj) {
+  // const combinedEpoch = (BigInt.asUintN(32,longObj.high) << 32n)| BigInt.asUintN(32, longObj.low);
+
+  // // Ensure longObj has high and low properties
+  // if (typeof longObj !== "object" || longObj === null || typeof longObj.high === 'undefined' || typeof longObj.low === 'undefined') {
+  //   throw new Error("Invalid long object");
+  // }
+
+  // // Convert high and low to BigInt, if they aren't already
+  // const highBigInt = (typeof longObj.high === 'bigint') ? longObj.high : BigInt(longObj.high);
+  // const lowBigInt = (typeof longObj.low === 'bigint') ? longObj.low : BigInt(longObj.low);
+
+  // // Ensure high and low are valid 32-bit unsigned integers
+  // if (lowBigInt < 0n) {
+  //   throw new Error(" Low should be unsigned 32-bit integers");
+  // }
+
+  // if (highBigInt < 0n || highBigInt > 0xFFFFFFFFn ) {
+  //   throw new Error("Low should be unsigned 32-bit integers");
+  // }
+
+
+  // Combine the high and low parts into a single BigInt
+  // const combinedEpoch = (BigInt.asUintN(32, highBigInt) << 32n) | BigInt.asUintN(32, lowBigInt);
+
+  // const packetEpochInMs = Number(combinedEpoch) * 1000; 
+
+  // const newDate = new Date(packetEpochInMs);
+  // console.log("new date in getEpoch ", newDate)
+
+  // Assuming long is an object with `low` and `high` properties
+  // const low = longObj.low >>> 0; // Convert to unsigned
+  // const high = longObj.high >>> 0; // Convert to unsigned
+  
+  // Combine them into a single unsigned integer
+  // const result = (longObj.high * 0x100000000) + longObj.low;
+
+  // const low = longObj.low < 0 ? longObj.low + 0x100000000 : longObj.low; // Convert low to unsigned if negative
+  // const result = (longObj.high * 0x100000000) + low; // Combine high and low
+  // return result;
+  // return Number((BigInt(412) << 32n) + BigInt(1715405636));
+
+  // const low = longObj.low < 0 ? longObj.low + 0x100000000 : longObj.low; // Convert negative low to unsigned
+  // const high = longObj.high >>> 0; // Ensure high is unsigned
+
+  // // Combine high and low to get the epoch timestamp
+  // const epochTimestamp = (BigInt(high) << 32n) + BigInt(low);
+  // console.log("epochTimestamp ", epochTimestamp)
+  // console.log("Number(epochTimestamp) :, ", Number(epochTimestamp))
+
+  // return Number(epochTimestamp);
+  const low = BigInt.asUintN(32, BigInt(longObj.low));
+  const high = BigInt.asUintN(32, BigInt(longObj.high));
+  var combined = (high << 32n) | low;
+  var combinedBigInt = BigInt.asUintN(64, combined);
+  console.log("combinedBigInt ", combinedBigInt)
+  return combinedBigInt;
+  
+}
+
 function Dashboard() {
   const { gradients } = colors;
   const { cardContent } = gradients;
+
+  const [currentPacket, setCurrentPacket] = useState(null);
+  const [temperatureLineChartData, setTemperatureLineChartData] = useState([]);
+
+  // Use ref to store the latest temperatureLineChartData
+  const temperatureDataRef = useRef(temperatureLineChartData);
+
+  // useEffect(() => {
+  //   if (window.electron && window.electron.ipcRenderer) {
+  //     window.electron.ipcRenderer.invoke('getCurrentPacket').then(setCurrentPacket);
+  //   } else {
+  //     console.error("ipcRenderer is not available.");
+  //   }
+  // }, []);
+
+  // Update ref whenever temperatureLineChartData state changes
+  useEffect(() => {
+    temperatureDataRef.current = temperatureLineChartData;
+  }, [temperatureLineChartData]);
+
+  // useEffect(() => {
+  //   if (window.electron && window.electron.ipcRenderer) {
+  //     window.electron.ipcRenderer.on('packet-updated', (event, packet) => {
+  //       console.log("packet updated on frontend");
+  //       setCurrentPacket(packet);
+  
+  //       const packetEpochInMs = Number(getEpochFromLong(packet.header.epoch)) * 1000;
+  //       const newTemp = packet.systemInfoPacket.simpleSensorReading.temperature;
+  
+  //       // Update the chart data directly
+  //       setTemperatureLineChartData((prevData) => [
+  //         ...prevData, 
+  //         [packetEpochInMs, newTemp]
+  //       ]);
+  //     });
+  
+  //     // Cleanup the event listener when the component unmounts
+  //     return () => {
+  //       window.electron.ipcRenderer.removeAllListeners('packet-updated');
+  //     };
+  //   } else {
+  //     console.error("ipcRenderer is not available.");
+  //   }
+  // }, []);
+  
+
+  useEffect(() => {
+    if (window.electron && window.electron.ipcRenderer) {
+      // Listen for the packet-updated event
+      window.electron.ipcRenderer.on('packet-updated', (event, packet) => {
+        console.log("packet updated on frontend")
+        setCurrentPacket(packet);
+
+        // update the temperature array
+        // const packetEpoch = getEpochFromLong(packet.header.epoch); // Or some method to deserialize Long
+        // const newDate = new Date(packetEpoch * 1000n); // If epoch is in seconds, multiply by 1000
+        // const newDateSec = new Date(packetEpoch); // If epoch is in seconds, multiply by 1000
+
+        // Get the epoch time from the packet
+        const packetEpochBigInt = getEpochFromLong(packet.header.epoch); 
+
+        // Convert the BigInt to a Number (if the epoch is in seconds)
+        const packetEpochInMs = Number(packetEpochBigInt) * 1000; 
+
+        // Create Date object
+        const newDate = new Date(packetEpochInMs);
+
+        console.log("packetEpoch (BigInt): ", packetEpochBigInt);
+        console.log("packetEpochInMs ", packetEpochInMs);
+        console.log("newDate (Milliseconds): ", newDate);
+        console.log("newDate (seconds): ", new Date(Number(packetEpochBigInt)));
+
+
+
+        const newTemp = packet.systemInfoPacket.simpleSensorReading.temperature
+        // console.log("packetEpoch ", packetEpoch)
+        // console.log("newDate ", newDate)
+        // console.log("newDateSec ", newDateSec)
+        // console.log("new Date(packet.header.epoch * 1000) ", new Date(packet.header.epoch * 1000n))
+
+
+        console.log("newTemp ", newTemp)
+        // setTemperatureLineChartData((prevData) => [...prevData, [0, 1]]);
+
+        // Update state using ref to always reference the latest array
+        setTemperatureLineChartData([...temperatureDataRef.current, [Number(packetEpochBigInt), newTemp]]);
+        console.log("temperatureLineChartData, ", temperatureLineChartData)
+
+      });
+
+    
+
+      // useEffect(() => {
+      //   console.log("Updated temperatureLineChartData: ", temperatureLineChartData);
+      // }, [temperatureLineChartData]);
+
+      // Cleanup the event listener when the component unmounts
+      return () => {
+        window.electron.ipcRenderer.removeAllListeners('packet-updated');
+      };
+    } else {
+      console.error("ipcRenderer is not available.");
+    }
+  }, []);
+
+  // Log updated temperature data
+  useEffect(() => {
+    console.log("Updated temperatureLineChartData: ", temperatureLineChartData);
+  }, [temperatureLineChartData]);
 
   return (
     <DashboardLayout>
@@ -72,15 +246,17 @@ function Dashboard() {
           <Grid container spacing={3}>
             <Grid item xs={12} md={6} xl={3}>
               <MiniStatisticsCard
-                title={{ text: "today's money", fontWeight: "regular" }}
-                count="$53,000"
+                title={{ text: "temperature", fontWeight: "regular" }}
+                count={currentPacket ?
+                  currentPacket.systemInfoPacket.simpleSensorReading.temperature : "N/A"
+                }
                 percentage={{ color: "success", text: "+55%" }}
                 icon={{ color: "info", component: <IoWallet size="22px" color="white" /> }}
               />
             </Grid>
             <Grid item xs={12} md={6} xl={3}>
               <MiniStatisticsCard
-                title={{ text: "today's users" }}
+                title={{ text: "humidity" }}
                 count="2,300"
                 percentage={{ color: "success", text: "+3%" }}
                 icon={{ color: "info", component: <IoGlobe size="22px" color="white" /> }}
@@ -88,7 +264,7 @@ function Dashboard() {
             </Grid>
             <Grid item xs={12} md={6} xl={3}>
               <MiniStatisticsCard
-                title={{ text: "new clients" }}
+                title={{ text: "pressure" }}
                 count="+3,462"
                 percentage={{ color: "error", text: "-2%" }}
                 icon={{ color: "info", component: <IoDocumentText size="22px" color="white" /> }}
@@ -96,7 +272,44 @@ function Dashboard() {
             </Grid>
             <Grid item xs={12} md={6} xl={3}>
               <MiniStatisticsCard
-                title={{ text: "total sales" }}
+                title={{ text: "gas" }}
+                count="$103,430"
+                percentage={{ color: "success", text: "+5%" }}
+                icon={{ color: "info", component: <FaShoppingCart size="20px" color="white" /> }}
+              />
+            </Grid>
+          </Grid>
+        </VuiBox>
+        
+        <VuiBox mb={3}>
+          <Grid container spacing={3}>
+            <Grid item xs={12} md={6} xl={3}>
+              <MiniStatisticsCard
+                title={{ text: "temperature", fontWeight: "regular" }}
+                count="$53,000"
+                percentage={{ color: "success", text: "+55%" }}
+                icon={{ color: "info", component: <IoWallet size="22px" color="white" /> }}
+              />
+            </Grid>
+            <Grid item xs={12} md={6} xl={3}>
+              <MiniStatisticsCard
+                title={{ text: "humidity" }}
+                count="2,300"
+                percentage={{ color: "success", text: "+3%" }}
+                icon={{ color: "info", component: <IoGlobe size="22px" color="white" /> }}
+              />
+            </Grid>
+            <Grid item xs={12} md={6} xl={3}>
+              <MiniStatisticsCard
+                title={{ text: "pressure" }}
+                count="+3,462"
+                percentage={{ color: "error", text: "-2%" }}
+                icon={{ color: "info", component: <IoDocumentText size="22px" color="white" /> }}
+              />
+            </Grid>
+            <Grid item xs={12} md={6} xl={3}>
+              <MiniStatisticsCard
+                title={{ text: "gas" }}
                 count="$103,430"
                 percentage={{ color: "success", text: "+5%" }}
                 icon={{ color: "info", component: <FaShoppingCart size="20px" color="white" /> }}
@@ -134,10 +347,20 @@ function Dashboard() {
                     </VuiTypography>
                   </VuiBox>
                   <VuiBox sx={{ height: "310px" }}>
-                    <LineChart
-                      lineChartData={lineChartDataDashboard}
-                      lineChartOptions={lineChartOptionsDashboard}
-                    />
+                  {/* <LineChart
+                    lineChartData={temperatureLineChartData.length > 0 
+                      ? [{ name: "Temperature", data: temperatureLineChartData }] 
+                      : [{ name: "Temperature", data: [] }]
+                    }
+                    lineChartOptions={lineChartOptionsDashboard}
+                  /> */}
+                  <LineChart
+                    lineChartData={temperatureLineChartData.length > 0 
+                      ? [{name: "Temperature", data: temperatureLineChartData}] 
+                      : [{name: "Temperature", data: temperatureLineChartData }]
+                    }
+                    lineChartOptions={lineChartOptionsDashboard}
+                  />
                   </VuiBox>
                 </VuiBox>
               </Card>
