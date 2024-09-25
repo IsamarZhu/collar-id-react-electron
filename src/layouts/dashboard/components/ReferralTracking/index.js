@@ -7,7 +7,7 @@ import { FaEllipsisH } from 'react-icons/fa';
 import linearGradient from 'assets/theme/functions/linearGradient';
 import CircularProgress from '@mui/material/CircularProgress';
 
-function ReferralTracking() {
+function ReferralTracking({charging, voltage, percentage}) {
 	const { info, gradients } = colors;
 	const { cardContent } = gradients;
 
@@ -25,7 +25,7 @@ function ReferralTracking() {
 					sx={{ width: '100%' }}
 					mb='40px'>
 					<VuiTypography variant='lg' color='white' mr='auto' fontWeight='bold'>
-						Referral Tracking
+						Battery State
 					</VuiTypography>
 					<VuiBox
 						display='flex'
@@ -83,10 +83,10 @@ function ReferralTracking() {
 								}
 							})}>
 							<VuiTypography color='text' variant='button' fontWeight='regular' mb='5px'>
-								Invited
+								Charging
 							</VuiTypography>
 							<VuiTypography color='white' variant='lg' fontWeight='bold'>
-								145 people
+								{charging ? charging : "N/A"}
 							</VuiTypography>
 						</VuiBox>
 						<VuiBox
@@ -106,17 +106,17 @@ function ReferralTracking() {
 								}
 							})}>
 							<VuiTypography color='text' variant='button' fontWeight='regular' mb='5px'>
-								Bonus
+								Voltage
 							</VuiTypography>
 							<VuiTypography color='white' variant='lg' fontWeight='bold'>
-								1,465
+								{Number(voltage).toFixed(2) ? Number(voltage).toFixed(2) : "N/A"}
 							</VuiTypography>
 						</VuiBox>
 					</Stack>
 					<VuiBox sx={{ position: 'relative', display: 'inline-flex' }}>
 						<CircularProgress
 							variant='determinate'
-							value={70}
+							value={percentage}
 							size={window.innerWidth >= 1024 ? 200 : window.innerWidth >= 768 ? 170 : 200}
 							color='success'
 						/>
@@ -133,7 +133,7 @@ function ReferralTracking() {
 							}}>
 							<VuiBox display='flex' flexDirection='column' justifyContent='center' alignItems='center'>
 								<VuiTypography color='text' variant='button' mb='4px'>
-									Safety
+									Battery Level
 								</VuiTypography>
 								<VuiTypography
 									color='white'
@@ -145,10 +145,10 @@ function ReferralTracking() {
 											fontSize: '32px'
 										}
 									})}>
-									9.3
+									{Number(percentage).toFixed(2) ? Number(percentage).toFixed(2) : "N/A"} %
 								</VuiTypography>
 								<VuiTypography color='text' variant='button'>
-									Total Score
+									Remaining
 								</VuiTypography>
 							</VuiBox>
 						</VuiBox>

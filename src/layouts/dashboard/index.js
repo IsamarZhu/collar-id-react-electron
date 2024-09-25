@@ -51,6 +51,16 @@ import { IoBuild } from "react-icons/io5";
 import { IoWallet } from "react-icons/io5";
 import { IoDocumentText } from "react-icons/io5";
 import { FaShoppingCart } from "react-icons/fa";
+import { FaTemperatureHalf } from "react-icons/fa6";
+import { IoSpeedometerSharp } from "react-icons/io5";
+import { PiWindBold } from "react-icons/pi";
+import { GiSparkles } from "react-icons/gi";
+import { MdBrightnessMedium } from "react-icons/md";
+import { TbArrowsMove } from "react-icons/tb";
+import { IoPaw } from "react-icons/io5";
+import { RiWaterPercentFill } from "react-icons/ri";
+
+
 
 // Data
 import LineChart from "examples/Charts/LineCharts/LineChart";
@@ -248,34 +258,40 @@ function Dashboard() {
               <MiniStatisticsCard
                 title={{ text: "temperature", fontWeight: "regular" }}
                 count={currentPacket ?
-                  currentPacket.systemInfoPacket.simpleSensorReading.temperature : "N/A"
+                  currentPacket.systemInfoPacket.simpleSensorReading.temperature.toFixed(4) : "N/A"
                 }
                 percentage={{ color: "success", text: "+55%" }}
-                icon={{ color: "info", component: <IoWallet size="22px" color="white" /> }}
+                icon={{ color: "info", component: <FaTemperatureHalf size="20px" color="white" /> }}
               />
             </Grid>
             <Grid item xs={12} md={6} xl={3}>
               <MiniStatisticsCard
                 title={{ text: "humidity" }}
-                count="2,300"
+                count={currentPacket ?
+                  currentPacket.systemInfoPacket.simpleSensorReading.humidity.toFixed(4) : "N/A"
+                }
                 percentage={{ color: "success", text: "+3%" }}
-                icon={{ color: "info", component: <IoGlobe size="22px" color="white" /> }}
+                icon={{ color: "info", component: <RiWaterPercentFill size="20px" color="white" /> }}
               />
             </Grid>
             <Grid item xs={12} md={6} xl={3}>
               <MiniStatisticsCard
                 title={{ text: "pressure" }}
-                count="+3,462"
+                count={currentPacket ?
+                  currentPacket.systemInfoPacket.simpleSensorReading.pressure.toFixed(4) : "N/A"
+                }
                 percentage={{ color: "error", text: "-2%" }}
-                icon={{ color: "info", component: <IoDocumentText size="22px" color="white" /> }}
+                icon={{ color: "info", component: <IoSpeedometerSharp size="20px" color="white" /> }}
               />
             </Grid>
             <Grid item xs={12} md={6} xl={3}>
               <MiniStatisticsCard
                 title={{ text: "gas" }}
-                count="$103,430"
+                count={currentPacket ?
+                  currentPacket.systemInfoPacket.simpleSensorReading.gas.toFixed(4) : "N/A"
+                }
                 percentage={{ color: "success", text: "+5%" }}
-                icon={{ color: "info", component: <FaShoppingCart size="20px" color="white" /> }}
+                icon={{ color: "info", component: <PiWindBold size="20px" color="white" /> }}
               />
             </Grid>
           </Grid>
@@ -285,34 +301,42 @@ function Dashboard() {
           <Grid container spacing={3}>
             <Grid item xs={12} md={6} xl={3}>
               <MiniStatisticsCard
-                title={{ text: "temperature", fontWeight: "regular" }}
-                count="$53,000"
+                title={{ text: "Particulate Matter", fontWeight: "regular" }}
+                count={currentPacket ?
+                  currentPacket.systemInfoPacket.simpleSensorReading.pm2_5.toFixed(4) : "N/A"
+                }
                 percentage={{ color: "success", text: "+55%" }}
-                icon={{ color: "info", component: <IoWallet size="22px" color="white" /> }}
+                icon={{ color: "info", component: <GiSparkles size="20px" color="white" /> }}
               />
             </Grid>
             <Grid item xs={12} md={6} xl={3}>
               <MiniStatisticsCard
-                title={{ text: "humidity" }}
-                count="2,300"
+                title={{ text: "Light" }}
+                count={currentPacket ?
+                  currentPacket.systemInfoPacket.simpleSensorReading.light : "N/A"
+                }
                 percentage={{ color: "success", text: "+3%" }}
-                icon={{ color: "info", component: <IoGlobe size="22px" color="white" /> }}
+                icon={{ color: "info", component: <MdBrightnessMedium size="20px" color="white" /> }}
               />
             </Grid>
             <Grid item xs={12} md={6} xl={3}>
               <MiniStatisticsCard
-                title={{ text: "pressure" }}
-                count="+3,462"
+                title={{ text: "Activity" }}
+                count={currentPacket ?
+                  currentPacket.systemInfoPacket.simpleSensorReading.activity : "N/A"
+                }
                 percentage={{ color: "error", text: "-2%" }}
-                icon={{ color: "info", component: <IoDocumentText size="22px" color="white" /> }}
+                icon={{ color: "info", component: <TbArrowsMove size="20px" color="white" /> }}
               />
             </Grid>
             <Grid item xs={12} md={6} xl={3}>
               <MiniStatisticsCard
-                title={{ text: "gas" }}
-                count="$103,430"
+                title={{ text: "Steps" }}
+                count={currentPacket ?
+                  currentPacket.systemInfoPacket.simpleSensorReading.steps : "N/A"
+                }
                 percentage={{ color: "success", text: "+5%" }}
-                icon={{ color: "info", component: <FaShoppingCart size="20px" color="white" /> }}
+                icon={{ color: "info", component: <IoPaw size="20px" color="white" /> }}
               />
             </Grid>
           </Grid>
@@ -323,10 +347,13 @@ function Dashboard() {
               <WelcomeMark />
             </Grid>
             <Grid item xs={12} lg={6} xl={3}>
-              <SatisfactionRate />
+              <SatisfactionRate value={currentPacket && currentPacket.systemInfoPacket.sdCardState ? currentPacket.systemInfoPacket.sdCardState.spaceRemaining : "N/A"}/>
             </Grid>
             <Grid item xs={12} lg={6} xl={4}>
-              <ReferralTracking />
+              <ReferralTracking charging={currentPacket ? currentPacket.systemInfoPacket.batteryState.charging : "N/A"} 
+                voltage={currentPacket ? currentPacket.systemInfoPacket.batteryState.voltage : "N/A"}
+                percentage={currentPacket ? currentPacket.systemInfoPacket.batteryState.percentage : "N/A"
+                }/>
             </Grid>
           </Grid>
         </VuiBox>
@@ -336,13 +363,13 @@ function Dashboard() {
               <Card>
                 <VuiBox sx={{ height: "100%" }}>
                   <VuiTypography variant="lg" color="white" fontWeight="bold" mb="5px">
-                    Sales Overview
+                    Temperature Overview
                   </VuiTypography>
                   <VuiBox display="flex" alignItems="center" mb="40px">
                     <VuiTypography variant="button" color="success" fontWeight="bold">
                       +5% more{" "}
                       <VuiTypography variant="button" color="text" fontWeight="regular">
-                        in 2021
+                        in 2021 [Edit]
                       </VuiTypography>
                     </VuiTypography>
                   </VuiBox>

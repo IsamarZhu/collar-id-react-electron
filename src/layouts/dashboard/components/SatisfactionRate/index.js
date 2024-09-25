@@ -4,11 +4,13 @@ import { Card } from '@mui/material';
 import VuiBox from 'components/VuiBox';
 import VuiTypography from 'components/VuiTypography';
 import { IoHappy } from 'react-icons/io5';
+import { MdSdStorage } from "react-icons/md";
+
 import colors from 'assets/theme/base/colors';
 import linearGradient from 'assets/theme/functions/linearGradient';
 import CircularProgress from '@mui/material/CircularProgress';
 
-const SatisfactionRate = () => {
+const SatisfactionRate = ({ value }) => {
 	const { info, gradients } = colors;
 	const { cardContent } = gradients;
 
@@ -16,14 +18,14 @@ const SatisfactionRate = () => {
 		<Card sx={{ height: '340px' }}>
 			<VuiBox display='flex' flexDirection='column'>
 				<VuiTypography variant='lg' color='white' fontWeight='bold' mb='4px'>
-					Satisfaction Rate
+					SD Card State
 				</VuiTypography>
 				<VuiTypography variant='button' color='text' fontWeight='regular' mb='20px'>
-					From all projects
+					Space remaining in card:
 				</VuiTypography>
 				<VuiBox sx={{ alignSelf: 'center', justifySelf: 'center', zIndex: '-1' }}>
 					<VuiBox sx={{ position: 'relative', display: 'inline-flex' }}>
-						<CircularProgress variant='determinate' value={60} size={170} color='info' />
+						<CircularProgress variant='determinate' value={value ? value : 100} size={180} color='info' />
 						<VuiBox
 							sx={{
 								top: 0,
@@ -38,15 +40,15 @@ const SatisfactionRate = () => {
 							<VuiBox
 								sx={{
 									background: info.main,
-									transform: 'translateY(-50%)',
-									width: '50px',
-									height: '50px',
-									borderRadius: '50%',
+									// transform: 'translateY(-80%)',
+									width: '80px',
+									height: '80px',
+									borderRadius: '60%',
 									display: 'flex',
 									justifyContent: 'center',
 									alignItems: 'center'
 								}}>
-								<IoHappy size='30px' color='#fff' />
+								<MdSdStorage size='50px' color='#fff' />
 							</VuiBox>
 						</VuiBox>
 					</VuiBox>
@@ -56,34 +58,36 @@ const SatisfactionRate = () => {
 						width: '90%',
 						padding: '18px 22px',
 						display: 'flex',
-						justifyContent: 'space-between',
+						// justifyContent: 'space-between',
+						justifyContent: 'center', // Updated this line
+						alignItems: 'center',
 						flexDirection: 'row',
 						height: '82px',
 						mx: 'auto',
 						borderRadius: '20px',
 						background: linearGradient(cardContent.main, cardContent.state, cardContent.deg),
-						transform: 'translateY(-90%)',
+						transform: 'translateY(-50%)',
 						zIndex: '1000'
 					})}>
-					<VuiTypography color='text' variant='caption' display='inline-block' fontWeight='regular'>
+					{/* <VuiTypography color='text' variant='caption' display='inline-block' fontWeight='regular'>
 						0%
-					</VuiTypography>
+					</VuiTypography> */}
 					<VuiBox
 						flexDirection='column'
 						display='flex'
 						justifyContent='center'
 						alignItems='center'
-						sx={{ minWidth: '80px' }}>
+						sx={{ minWidth: '100px' }}>
 						<VuiTypography color='white' variant='h3'>
-							95%
+							{value ? value : N/A}
 						</VuiTypography>
 						<VuiTypography color='text' variant='caption' fontWeight='regular'>
-							Based on likes
+							GB
 						</VuiTypography>
 					</VuiBox>
-					<VuiTypography color='text' variant='caption' display='inline-block' fontWeight='regular'>
+					{/* <VuiTypography color='text' variant='caption' display='inline-block' fontWeight='regular'>
 						100%
-					</VuiTypography>
+					</VuiTypography> */}
 				</VuiBox>
 			</VuiBox>
 		</Card>
