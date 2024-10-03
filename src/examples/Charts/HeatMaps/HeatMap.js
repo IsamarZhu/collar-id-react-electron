@@ -1,7 +1,7 @@
 import React from "react";
 import ReactApexChart from "react-apexcharts";
 
-class LineChart extends React.Component {
+class HeatMap extends React.Component {
   constructor(props) {
     super(props);
 
@@ -12,11 +12,11 @@ class LineChart extends React.Component {
   }
 
   componentDidMount() {
-    const { lineChartData, lineChartOptions } = this.props;
+    const { heatMapData, heatMapOptions } = this.props;
 
     this.setState({
-      chartData: lineChartData,
-      chartOptions: lineChartOptions,
+      chartData: heatMapData,
+      chartOptions: heatMapOptions,
     });
 
     console.log("component mounted")
@@ -24,14 +24,14 @@ class LineChart extends React.Component {
 
   // Add componentDidUpdate to watch for prop changes
   componentDidUpdate(prevProps) {
-    if (prevProps.lineChartData !== this.props.lineChartData) {
+    if (prevProps.heatMapData !== this.props.heatMapData) {
       this.setState({
-        chartData: this.props.lineChartData,
+        chartData: this.props.heatMapData,
       });
     }
-    if (prevProps.lineChartOptions !== this.props.lineChartOptions) {
+    if (prevProps.heatMapOptions !== this.props.heatMapOptions) {
       this.setState({
-        chartOptions: this.props.lineChartOptions,
+        chartOptions: this.props.heatMapOptions,
       });
     }
   }
@@ -43,7 +43,7 @@ class LineChart extends React.Component {
         options={this.state.chartOptions}
         series={this.state.chartData}
         // series={sampleTemperatureData}
-        type="area"
+        type="heatmap"
         width="100%"
         height="100%"
       />
@@ -76,4 +76,4 @@ const sampleTemperatureData = [{
 }];
 
 
-export default LineChart;
+export default HeatMap;

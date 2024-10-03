@@ -25,7 +25,7 @@ const SatisfactionRate = ({ value }) => {
 				</VuiTypography>
 				<VuiBox sx={{ alignSelf: 'center', justifySelf: 'center', zIndex: '-1' }}>
 					<VuiBox sx={{ position: 'relative', display: 'inline-flex' }}>
-						<CircularProgress variant='determinate' value={value ? value : 100} size={180} color='info' />
+						<CircularProgress variant='determinate' value={100} size={180} color='info' />
 						<VuiBox
 							sx={{
 								top: 0,
@@ -79,7 +79,7 @@ const SatisfactionRate = ({ value }) => {
 						alignItems='center'
 						sx={{ minWidth: '100px' }}>
 						<VuiTypography color='white' variant='h3'>
-							{value ? value : N/A}
+							{value ? value : "N/A"}
 						</VuiTypography>
 						<VuiTypography color='text' variant='caption' fontWeight='regular'>
 							GB

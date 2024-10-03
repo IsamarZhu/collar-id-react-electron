@@ -19,7 +19,7 @@
 // @mui material components
 import Grid from "@mui/material/Grid";
 import Icon from "@mui/material/Icon";
-import { Card, LinearProgress, Stack } from "@mui/material";
+import { Card, LinearProgress, Stack, Select, MenuItem } from "@mui/material";
 
 // Vision UI Dashboard React components
 import VuiBox from "components/VuiBox";
@@ -65,74 +65,32 @@ import { RiWaterPercentFill } from "react-icons/ri";
 // Data
 import LineChart from "examples/Charts/LineCharts/LineChart";
 import BarChart from "examples/Charts/BarCharts/BarChart";
+import HeatMap from "examples/Charts/HeatMaps/HeatMap";
+
 import { lineChartDataDashboard } from "layouts/dashboard/data/lineChartData";
 import { lineChartOptionsDashboard } from "layouts/dashboard/data/lineChartOptions";
 import { barChartDataDashboard } from "layouts/dashboard/data/barChartData";
 import { barChartOptionsDashboard } from "layouts/dashboard/data/barChartOptions";
+import { heatMapDataDashboard } from "layouts/dashboard/data/heatMapData";
+import { heatMapOptionsDashboard } from "layouts/dashboard/data/heatMapOptions";
 
 
 
 // const { ipcRenderer } = window.require('electron');
-import { useEffect, useState, useRef } from "react";
-
-function getEpochFromLong(longObj) {
-  // const combinedEpoch = (BigInt.asUintN(32,longObj.high) << 32n)| BigInt.asUintN(32, longObj.low);
-
-  // // Ensure longObj has high and low properties
-  // if (typeof longObj !== "object" || longObj === null || typeof longObj.high === 'undefined' || typeof longObj.low === 'undefined') {
-  //   throw new Error("Invalid long object");
-  // }
-
-  // // Convert high and low to BigInt, if they aren't already
-  // const highBigInt = (typeof longObj.high === 'bigint') ? longObj.high : BigInt(longObj.high);
-  // const lowBigInt = (typeof longObj.low === 'bigint') ? longObj.low : BigInt(longObj.low);
-
-  // // Ensure high and low are valid 32-bit unsigned integers
-  // if (lowBigInt < 0n) {
-  //   throw new Error(" Low should be unsigned 32-bit integers");
-  // }
-
-  // if (highBigInt < 0n || highBigInt > 0xFFFFFFFFn ) {
-  //   throw new Error("Low should be unsigned 32-bit integers");
-  // }
+import { useEffect, useMemo, useState, useRef } from "react";
+import LastFivePackets from "./components/LastFivePackets";
+import OfflineMap from "./components/OfflineMap";
 
 
-  // Combine the high and low parts into a single BigInt
-  // const combinedEpoch = (BigInt.asUintN(32, highBigInt) << 32n) | BigInt.asUintN(32, lowBigInt);
-
-  // const packetEpochInMs = Number(combinedEpoch) * 1000; 
-
-  // const newDate = new Date(packetEpochInMs);
-  // console.log("new date in getEpoch ", newDate)
-
-  // Assuming long is an object with `low` and `high` properties
-  // const low = longObj.low >>> 0; // Convert to unsigned
-  // const high = longObj.high >>> 0; // Convert to unsigned
+function getNumFromLong(longObj) {
   
-  // Combine them into a single unsigned integer
-  // const result = (longObj.high * 0x100000000) + longObj.low;
-
-  // const low = longObj.low < 0 ? longObj.low + 0x100000000 : longObj.low; // Convert low to unsigned if negative
-  // const result = (longObj.high * 0x100000000) + low; // Combine high and low
-  // return result;
-  // return Number((BigInt(412) << 32n) + BigInt(1715405636));
-
-  // const low = longObj.low < 0 ? longObj.low + 0x100000000 : longObj.low; // Convert negative low to unsigned
-  // const high = longObj.high >>> 0; // Ensure high is unsigned
-
-  // // Combine high and low to get the epoch timestamp
-  // const epochTimestamp = (BigInt(high) << 32n) + BigInt(low);
-  // console.log("epochTimestamp ", epochTimestamp)
-  // console.log("Number(epochTimestamp) :, ", Number(epochTimestamp))
-
-  // return Number(epochTimestamp);
   const low = BigInt.asUintN(32, BigInt(longObj.low));
   const high = BigInt.asUintN(32, BigInt(longObj.high));
   var combined = (high << 32n) | low;
   var combinedBigInt = BigInt.asUintN(64, combined);
   console.log("combinedBigInt ", combinedBigInt)
   return combinedBigInt;
-  
+
 }
 
 function Dashboard() {
@@ -140,49 +98,79 @@ function Dashboard() {
   const { cardContent } = gradients;
 
   const [currentPacket, setCurrentPacket] = useState(null);
+
   const [temperatureLineChartData, setTemperatureLineChartData] = useState([]);
+  const [humidityLineChartData, setHumidityLineChartData] = useState([]);
+  const [pressureLineChartData, setPressureLineChartData] = useState([]);
+  const [gasLineChartData, setGasLineChartData] = useState([]);
+  const [pmLineChartData, setPmLineChartData] = useState([]);
+  const [lightLineChartData, setLightLineChartData] = useState([]);
+  const [activityLineChartData, setActivityLineChartData] = useState([]);
+  const [stepsLineChartData, setStepsLineChartData] = useState([]);
+
+
+  const [lastFivePackets, setLastFivePackets] = useState([]);
+
+  const [lastTenLocations, setLastTenLocations] = useState([]);
+
+  const [packetDiff, setPacketDiff] = useState({
+    temperature: 0,
+    humidity: 0,
+    pressure: 0,
+    gas: 0,
+    pm: 0,
+    light: 0,
+    activity: 0,
+    steps: 0,
+});
+  const [selectedChart, setSelectedChart] = useState("temperature");
 
   // Use ref to store the latest temperatureLineChartData
   const temperatureDataRef = useRef(temperatureLineChartData);
+  const humidityDataRef = useRef(humidityLineChartData);
+  const pressureDataRef = useRef(pressureLineChartData);
+  const gasDataRef = useRef(gasLineChartData);
+  const pmDataRef = useRef(pmLineChartData);
+  const lightDataRef = useRef(lightLineChartData);
+  const activityDataRef = useRef(activityLineChartData);
+  const stepsDataRef = useRef(stepsLineChartData);
 
-  // useEffect(() => {
-  //   if (window.electron && window.electron.ipcRenderer) {
-  //     window.electron.ipcRenderer.invoke('getCurrentPacket').then(setCurrentPacket);
-  //   } else {
-  //     console.error("ipcRenderer is not available.");
-  //   }
-  // }, []);
+  const memoizedLocations = useMemo(() => lastTenLocations, [lastTenLocations]);
+
 
   // Update ref whenever temperatureLineChartData state changes
   useEffect(() => {
     temperatureDataRef.current = temperatureLineChartData;
   }, [temperatureLineChartData]);
 
-  // useEffect(() => {
-  //   if (window.electron && window.electron.ipcRenderer) {
-  //     window.electron.ipcRenderer.on('packet-updated', (event, packet) => {
-  //       console.log("packet updated on frontend");
-  //       setCurrentPacket(packet);
-  
-  //       const packetEpochInMs = Number(getEpochFromLong(packet.header.epoch)) * 1000;
-  //       const newTemp = packet.systemInfoPacket.simpleSensorReading.temperature;
-  
-  //       // Update the chart data directly
-  //       setTemperatureLineChartData((prevData) => [
-  //         ...prevData, 
-  //         [packetEpochInMs, newTemp]
-  //       ]);
-  //     });
-  
-  //     // Cleanup the event listener when the component unmounts
-  //     return () => {
-  //       window.electron.ipcRenderer.removeAllListeners('packet-updated');
-  //     };
-  //   } else {
-  //     console.error("ipcRenderer is not available.");
-  //   }
-  // }, []);
-  
+  useEffect(() => {
+    humidityDataRef.current = humidityLineChartData;
+  }, [humidityLineChartData]);
+
+  useEffect(() => {
+    pressureDataRef.current = pressureLineChartData;
+  }, [pressureLineChartData]);
+
+  useEffect(() => {
+    gasDataRef.current = gasLineChartData;
+  }, [gasLineChartData]);
+
+  useEffect(() => {
+    pmDataRef.current = pmLineChartData;
+  }, [pmLineChartData]);
+
+  useEffect(() => {
+    lightDataRef.current = lightLineChartData;
+  }, [lightLineChartData]);
+
+  useEffect(() => {
+    activityDataRef.current = activityLineChartData;
+  }, [activityLineChartData]);
+
+  useEffect(() => {
+    stepsDataRef.current = stepsLineChartData;
+  }, [stepsLineChartData]);
+
 
   useEffect(() => {
     if (window.electron && window.electron.ipcRenderer) {
@@ -197,10 +185,12 @@ function Dashboard() {
         // const newDateSec = new Date(packetEpoch); // If epoch is in seconds, multiply by 1000
 
         // Get the epoch time from the packet
-        const packetEpochBigInt = getEpochFromLong(packet.header.epoch); 
+        const packetEpochBigInt = getNumFromLong(packet.header.epoch);
+
+        console.log("packet.systemInfoPacket.sdcardState.spaceRemaining ", packet.systemInfoPacket.sdcardState.spaceRemaining)
 
         // Convert the BigInt to a Number (if the epoch is in seconds)
-        const packetEpochInMs = Number(packetEpochBigInt) * 1000; 
+        const packetEpochInMs = Number(packetEpochBigInt) * 1000;
 
         // Create Date object
         const newDate = new Date(packetEpochInMs);
@@ -213,22 +203,65 @@ function Dashboard() {
 
 
         const newTemp = packet.systemInfoPacket.simpleSensorReading.temperature
-        // console.log("packetEpoch ", packetEpoch)
-        // console.log("newDate ", newDate)
-        // console.log("newDateSec ", newDateSec)
-        // console.log("new Date(packet.header.epoch * 1000) ", new Date(packet.header.epoch * 1000n))
-
+        const newHumidity = packet.systemInfoPacket.simpleSensorReading.humidity;
+        const newPressure = packet.systemInfoPacket.simpleSensorReading.pressure;
+        const newGas = packet.systemInfoPacket.simpleSensorReading.gas;
+        const newPm = packet.systemInfoPacket.simpleSensorReading.pm2_5;
+        const newLight = packet.systemInfoPacket.simpleSensorReading.light;
+        const newActivity = packet.systemInfoPacket.simpleSensorReading.activity;
+        const newSteps = packet.systemInfoPacket.simpleSensorReading.steps;
 
         console.log("newTemp ", newTemp)
         // setTemperatureLineChartData((prevData) => [...prevData, [0, 1]]);
 
         // Update state using ref to always reference the latest array
         setTemperatureLineChartData([...temperatureDataRef.current, [Number(packetEpochBigInt), newTemp]]);
+        setHumidityLineChartData([...humidityDataRef.current, [Number(packetEpochBigInt), newHumidity]]);
+        setPressureLineChartData([...pressureDataRef.current, [Number(packetEpochBigInt), newPressure]]);
+        setGasLineChartData([...gasDataRef.current, [Number(packetEpochBigInt), newGas]]);
+        setPmLineChartData([...pmDataRef.current, [Number(packetEpochBigInt), newPm]]);
+        setLightLineChartData([...lightDataRef.current, [Number(packetEpochBigInt), newLight]]);
+        setActivityLineChartData([...activityDataRef.current, [Number(packetEpochBigInt), newActivity]]);
+        setStepsLineChartData([...stepsDataRef.current, [Number(packetEpochBigInt), newSteps]]);
+
+
         console.log("temperatureLineChartData, ", temperatureLineChartData)
+
+        // Update the lastFivePackets array to store the packet and its received date
+        setLastFivePackets((prevPackets) => {
+          const newPacket = [
+            packet,
+            new Date(Number(packetEpochBigInt))
+          ];
+
+          const newPackets = [...prevPackets, newPacket].slice(-5); // Only keep the last 5 packets
+          return newPackets;
+        });
+
+        const newLocationData = {
+          loc: { 
+            latitude: packet.systemInfoPacket.gpsData.latitude, 
+            longitude: packet.systemInfoPacket.gpsData.longitude 
+          },
+          time: new Date(Number(packetEpochBigInt)),
+          uid: packet.header.systemUid,
+        };
+    
+        // Update the lastTenLocations array, keeping only the last 10 entries
+        setLastTenLocations((prevLocations) => {
+          const updatedLocations = [...prevLocations, newLocationData].slice(-10);
+          return updatedLocations;
+        });
+
+        // Log the updated locations for testing
+        console.log("Updated lastTenLocations: ", lastTenLocations);
+
 
       });
 
-    
+      
+
+
 
       // useEffect(() => {
       //   console.log("Updated temperatureLineChartData: ", temperatureLineChartData);
@@ -248,6 +281,63 @@ function Dashboard() {
     console.log("Updated temperatureLineChartData: ", temperatureLineChartData);
   }, [temperatureLineChartData]);
 
+  // Log updated location data
+  useEffect(() => {
+    console.log("Updated lastTenLocations: ", lastTenLocations);
+  }, [lastTenLocations]);
+
+  useEffect(() => {
+    console.log("Updated lastFivePackets: ", lastFivePackets);
+    console.log("lastFivePackets.length ", lastFivePackets.length)
+
+        if (lastFivePackets.length > 1) { // if there's another packet to compare to
+          console.log("updating packetDiff")
+          const newDiff = {
+            "temperature": (currentPacket.systemInfoPacket.simpleSensorReading.temperature - lastFivePackets[lastFivePackets.length - 2][0].systemInfoPacket.simpleSensorReading.temperature).toFixed(2),
+            "humidity": (currentPacket.systemInfoPacket.simpleSensorReading.humidity - lastFivePackets[lastFivePackets.length - 2][0].systemInfoPacket.simpleSensorReading.humidity).toFixed(2),
+            "pressure": (currentPacket.systemInfoPacket.simpleSensorReading.pressure - lastFivePackets[lastFivePackets.length - 2][0].systemInfoPacket.simpleSensorReading.pressure).toFixed(2),
+            "gas": (currentPacket.systemInfoPacket.simpleSensorReading.gas - lastFivePackets[lastFivePackets.length - 2][0].systemInfoPacket.simpleSensorReading.gas).toFixed(2),
+            "pm": (currentPacket.systemInfoPacket.simpleSensorReading.pm2_5 - lastFivePackets[lastFivePackets.length - 2][0].systemInfoPacket.simpleSensorReading.pm2_5).toFixed(2), 
+            "light": (currentPacket.systemInfoPacket.simpleSensorReading.light - lastFivePackets[lastFivePackets.length - 2][0].systemInfoPacket.simpleSensorReading.light).toFixed(2),
+            "activity": (currentPacket.systemInfoPacket.simpleSensorReading.activity - lastFivePackets[lastFivePackets.length - 2][0].systemInfoPacket.simpleSensorReading.activity).toFixed(2),
+            "steps": (currentPacket.systemInfoPacket.simpleSensorReading.steps - lastFivePackets[lastFivePackets.length - 2][0].systemInfoPacket.simpleSensorReading.steps).toFixed(2),
+          }
+          setPacketDiff(newDiff)
+        }
+        
+  }, [lastFivePackets]);
+
+  useEffect(() => {
+    console.log("Updated packetDiff: ", packetDiff);
+  }, [packetDiff]);
+
+  // handle line chart change
+  const handleChartChange = (event) => {
+    setSelectedChart(event.target.value); // Update the selected chart based on dropdown selection
+  };
+
+  // Determine which line chart data to display
+  const lineChartData = () => {
+    switch (selectedChart) {
+      case "humidity":
+        return humidityLineChartData.length > 0 ? [{ name: "Humidity", data: humidityLineChartData }] : [];
+      case "pressure":
+        return pressureLineChartData.length > 0 ? [{ name: "Pressure", data: pressureLineChartData }] : [];
+      case "gas":
+        return gasLineChartData.length > 0 ? [{ name: "Gas", data: gasLineChartData }] : [];
+      case "pm":
+        return pmLineChartData.length > 0 ? [{ name: "Particulate Matter", data: pmLineChartData }] : [];
+      case "light":
+        return lightLineChartData.length > 0 ? [{ name: "Light", data: lightLineChartData }] : [];
+      case "activity":
+        return activityLineChartData.length > 0 ? [{ name: "Activity", data: activityLineChartData }] : [];
+      case "steps":
+        return stepsLineChartData.length > 0 ? [{ name: "Steps", data: stepsLineChartData }] : [];
+      default: // temperature
+        return temperatureLineChartData.length > 0 ? [{ name: "Temperature", data: temperatureLineChartData }] : [];
+    }
+  };
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -260,7 +350,9 @@ function Dashboard() {
                 count={currentPacket ?
                   currentPacket.systemInfoPacket.simpleSensorReading.temperature.toFixed(4) : "N/A"
                 }
-                percentage={{ color: "success", text: "+55%" }}
+                percentage={{ color: packetDiff && packetDiff["temperature"] > 0 ? "success" : "error", text: currentPacket && lastFivePackets.length > 1 && lastFivePackets[lastFivePackets.length - 1][0]
+                  ? (packetDiff["temperature"])
+                  : "N/A" }}
                 icon={{ color: "info", component: <FaTemperatureHalf size="20px" color="white" /> }}
               />
             </Grid>
@@ -270,7 +362,9 @@ function Dashboard() {
                 count={currentPacket ?
                   currentPacket.systemInfoPacket.simpleSensorReading.humidity.toFixed(4) : "N/A"
                 }
-                percentage={{ color: "success", text: "+3%" }}
+                percentage={{ color: packetDiff && packetDiff["humidity"] > 0 ? "success" : "error", text: currentPacket && lastFivePackets.length > 1 && lastFivePackets[lastFivePackets.length - 1][0]
+                  ? (packetDiff["humidity"])
+                  : "N/A" }}
                 icon={{ color: "info", component: <RiWaterPercentFill size="20px" color="white" /> }}
               />
             </Grid>
@@ -280,7 +374,9 @@ function Dashboard() {
                 count={currentPacket ?
                   currentPacket.systemInfoPacket.simpleSensorReading.pressure.toFixed(4) : "N/A"
                 }
-                percentage={{ color: "error", text: "-2%" }}
+                percentage={{ color: packetDiff && packetDiff["pressure"] > 0 ? "success" : "error", text: currentPacket && lastFivePackets.length > 1 && lastFivePackets[lastFivePackets.length - 1][0]
+                  ? (packetDiff["pressure"])
+                  : "N/A" }}
                 icon={{ color: "info", component: <IoSpeedometerSharp size="20px" color="white" /> }}
               />
             </Grid>
@@ -290,13 +386,15 @@ function Dashboard() {
                 count={currentPacket ?
                   currentPacket.systemInfoPacket.simpleSensorReading.gas.toFixed(4) : "N/A"
                 }
-                percentage={{ color: "success", text: "+5%" }}
+                percentage={{ color: packetDiff && packetDiff["gas"] > 0 ? "success" : "error", text: currentPacket && lastFivePackets.length > 1 && lastFivePackets[lastFivePackets.length - 1][0]
+                  ? (packetDiff["gas"])
+                  : "N/A" }}
                 icon={{ color: "info", component: <PiWindBold size="20px" color="white" /> }}
               />
             </Grid>
           </Grid>
         </VuiBox>
-        
+
         <VuiBox mb={3}>
           <Grid container spacing={3}>
             <Grid item xs={12} md={6} xl={3}>
@@ -305,7 +403,9 @@ function Dashboard() {
                 count={currentPacket ?
                   currentPacket.systemInfoPacket.simpleSensorReading.pm2_5.toFixed(4) : "N/A"
                 }
-                percentage={{ color: "success", text: "+55%" }}
+                percentage={{ color: packetDiff && packetDiff["pm"] > 0 ? "success" : "error", text: currentPacket && lastFivePackets.length > 1 && lastFivePackets[lastFivePackets.length - 1][0]
+                  ? (packetDiff["pm"])
+                  : "N/A" }}
                 icon={{ color: "info", component: <GiSparkles size="20px" color="white" /> }}
               />
             </Grid>
@@ -315,7 +415,9 @@ function Dashboard() {
                 count={currentPacket ?
                   currentPacket.systemInfoPacket.simpleSensorReading.light : "N/A"
                 }
-                percentage={{ color: "success", text: "+3%" }}
+                percentage={{ color: packetDiff && packetDiff["light"] > 0 ? "success" : "error", text: currentPacket && lastFivePackets.length > 1 && lastFivePackets[lastFivePackets.length - 1][0]
+                  ? (packetDiff["light"])
+                  : "N/A" }}
                 icon={{ color: "info", component: <MdBrightnessMedium size="20px" color="white" /> }}
               />
             </Grid>
@@ -325,7 +427,9 @@ function Dashboard() {
                 count={currentPacket ?
                   currentPacket.systemInfoPacket.simpleSensorReading.activity : "N/A"
                 }
-                percentage={{ color: "error", text: "-2%" }}
+                percentage={{ color: packetDiff && packetDiff["activity"] > 0 ? "success" : "error", text: currentPacket && lastFivePackets.length > 1 && lastFivePackets[lastFivePackets.length - 1][0]
+                  ? (packetDiff["activity"])
+                  : "N/A" }}
                 icon={{ color: "info", component: <TbArrowsMove size="20px" color="white" /> }}
               />
             </Grid>
@@ -335,7 +439,9 @@ function Dashboard() {
                 count={currentPacket ?
                   currentPacket.systemInfoPacket.simpleSensorReading.steps : "N/A"
                 }
-                percentage={{ color: "success", text: "+5%" }}
+                percentage={{ color: packetDiff && packetDiff["steps"] > 0 ? "success" : "error", text: currentPacket && lastFivePackets.length > 1 && lastFivePackets[lastFivePackets.length - 1][0]
+                  ? (packetDiff["steps"])
+                  : "N/A" }}
                 icon={{ color: "info", component: <IoPaw size="20px" color="white" /> }}
               />
             </Grid>
@@ -347,55 +453,35 @@ function Dashboard() {
               <WelcomeMark />
             </Grid>
             <Grid item xs={12} lg={6} xl={3}>
-              <SatisfactionRate value={currentPacket && currentPacket.systemInfoPacket.sdCardState ? currentPacket.systemInfoPacket.sdCardState.spaceRemaining : "N/A"}/>
+              <SatisfactionRate value={currentPacket ? (currentPacket.systemInfoPacket.sdcardState.spaceRemaining * 0.001).toFixed(4) : "N/A"} />
             </Grid>
             <Grid item xs={12} lg={6} xl={4}>
-              <ReferralTracking charging={currentPacket ? currentPacket.systemInfoPacket.batteryState.charging : "N/A"} 
+              <ReferralTracking charging={currentPacket ? currentPacket.systemInfoPacket.batteryState.charging : false}
                 voltage={currentPacket ? currentPacket.systemInfoPacket.batteryState.voltage : "N/A"}
                 percentage={currentPacket ? currentPacket.systemInfoPacket.batteryState.percentage : "N/A"
-                }/>
+                } />
             </Grid>
           </Grid>
         </VuiBox>
         <VuiBox mb={3}>
           <Grid container spacing={3}>
-            <Grid item xs={12} lg={6} xl={7}>
-              <Card>
-                <VuiBox sx={{ height: "100%" }}>
-                  <VuiTypography variant="lg" color="white" fontWeight="bold" mb="5px">
-                    Temperature Overview
-                  </VuiTypography>
-                  <VuiBox display="flex" alignItems="center" mb="40px">
-                    <VuiTypography variant="button" color="success" fontWeight="bold">
-                      +5% more{" "}
-                      <VuiTypography variant="button" color="text" fontWeight="regular">
-                        in 2021 [Edit]
-                      </VuiTypography>
-                    </VuiTypography>
-                  </VuiBox>
-                  <VuiBox sx={{ height: "310px" }}>
-                  {/* <LineChart
-                    lineChartData={temperatureLineChartData.length > 0 
-                      ? [{ name: "Temperature", data: temperatureLineChartData }] 
-                      : [{ name: "Temperature", data: [] }]
-                    }
-                    lineChartOptions={lineChartOptionsDashboard}
-                  /> */}
-                  <LineChart
-                    lineChartData={temperatureLineChartData.length > 0 
-                      ? [{name: "Temperature", data: temperatureLineChartData}] 
-                      : [{name: "Temperature", data: temperatureLineChartData }]
-                    }
-                    lineChartOptions={lineChartOptionsDashboard}
-                  />
-                  </VuiBox>
-                </VuiBox>
-              </Card>
-            </Grid>
+            
             <Grid item xs={12} lg={6} xl={5}>
-              <Card>
+              <LastFivePackets lastFivePackets={lastFivePackets}/>
+              {/* <Card>
                 <VuiBox>
-                  <VuiBox
+                <VuiTypography variant="lg" color="white" fontWeight="bold" mb="5px">
+                    HeatMap Overview
+                  </VuiTypography>
+
+                  <VuiBox sx={{ height: "350px" }}>
+                  {/* <VuiTypography color="white" variant="lg" mb="6px" gutterBottom>
+                    Projects
+                  </VuiTypography> */}
+                  {/* <Projects /> */}
+                  {/* <HeatMap heatMapData={heatMapDataDashboard} heatMapOptions={heatMapOptionsDashboard} />
+                  </VuiBox> */}
+                  {/* <VuiBox
                     mb="24px"
                     height="220px"
                     sx={{
@@ -406,8 +492,8 @@ function Dashboard() {
                       ),
                       borderRadius: "20px",
                     }}
-                  >
-                    <BarChart
+                  > */}
+                    {/* <BarChart
                       barChartData={barChartDataDashboard}
                       barChartOptions={barChartOptionsDashboard}
                     />
@@ -520,7 +606,54 @@ function Dashboard() {
                       </VuiTypography>
                       <VuiProgress value={60} color="info" sx={{ background: "#2D2E5F" }} />
                     </Grid>
-                  </Grid>
+                  </Grid> 
+                </VuiBox> 
+              </Card> */}
+            </Grid>
+            <Grid item xs={12} lg={6} xl={7}>
+              <Card>
+                <VuiBox sx={{ height: "100%" }}>
+                  <VuiTypography variant="lg" color="white" fontWeight="bold" mb="5px">
+                    {`${selectedChart.charAt(0).toUpperCase() + selectedChart.slice(1)} Overview`}
+                  </VuiTypography>
+                  <VuiBox display="flex" alignItems="center" mb="40px">
+                    <VuiTypography variant="button" color={packetDiff && packetDiff[selectedChart] > 0 ? "success" : "error"} fontWeight="bold">
+                      { currentPacket && lastFivePackets.length > 1 && lastFivePackets[lastFivePackets.length - 1][0]
+                        ? (packetDiff[selectedChart])
+                        : "N/A" }
+                      <VuiTypography variant="button" color="text" fontWeight="regular">
+                        {" "} change since last packet
+                      </VuiTypography>
+                    </VuiTypography>
+                  </VuiBox>
+                  {/* <VuiBox sx={{ height: "310px" }}>
+                    
+                    <LineChart
+                      lineChartData={temperatureLineChartData.length > 0
+                        ? [{ name: "Temperature", data: temperatureLineChartData }]
+                        : [{ name: "Temperature", data: temperatureLineChartData }]
+                      }
+                      lineChartOptions={lineChartOptionsDashboard}
+                    />
+                  </VuiBox> */}
+                  <VuiBox display="flex" alignItems="center" mb="20px" sx={{width: '200px'}}>
+                    <Select value={selectedChart} onChange={handleChartChange} bgColor="info" sx={{width: '40px'}}>
+                      <MenuItem value="temperature">Temperature</MenuItem>
+                      <MenuItem value="humidity">Humidity</MenuItem>
+                      <MenuItem value="pressure">Pressure</MenuItem>
+                      <MenuItem value="gas">Gas</MenuItem>
+                      <MenuItem value="pm">Particulate Matter</MenuItem>
+                      <MenuItem value="light">Light</MenuItem>
+                      <MenuItem value="activity">Activity</MenuItem>
+                      <MenuItem value="steps">Steps</MenuItem>
+                    </Select>
+                  </VuiBox>
+                  <VuiBox sx={{ height: "310px" }}>
+                    <LineChart
+                      lineChartData={lineChartData()}
+                      lineChartOptions={lineChartOptionsDashboard}
+                    />
+                  </VuiBox>
                 </VuiBox>
               </Card>
             </Grid>
@@ -528,10 +661,27 @@ function Dashboard() {
         </VuiBox>
         <Grid container spacing={3} direction="row" justifyContent="center" alignItems="stretch">
           <Grid item xs={12} md={6} lg={8}>
-            <Projects />
+          <Card>
+                <VuiBox sx={{ height: "100%" }}>
+                  <VuiTypography variant="lg" color="white" fontWeight="bold" mb="20px">
+                    Map Overview
+                  </VuiTypography>
+
+                  <VuiBox sx={{ borderRadius: "10px", height: "500px" }} mb="20px" >
+                  {/* <VuiTypography color="white" variant="lg" mb="6px" gutterBottom>
+                    Projects
+                  </VuiTypography> */}
+                  {/* <Projects /> */}
+                  {/* <HeatMap heatMapData={heatMapDataDashboard} heatMapOptions={heatMapOptionsDashboard} /> */}
+                  < OfflineMap lastTenLocations={lastTenLocations}/>
+                  </VuiBox>
+              </VuiBox>
+            </Card>
           </Grid>
           <Grid item xs={12} md={6} lg={4}>
-            <OrderOverview />
+            <OrderOverview staticObstructed={currentPacket ? currentPacket.systemInfoPacket.simpleSensorReading.particulateStaticObstructed : false}
+            dynamicObstructed={currentPacket ? currentPacket.systemInfoPacket.simpleSensorReading.particulateDynamicObstructed : false}
+            particulateOutsideDetectionLimits={currentPacket ? currentPacket.systemInfoPacket.simpleSensorReading.particulateOutsideDetectionLimits : false}/>
           </Grid>
         </Grid>
       </VuiBox>

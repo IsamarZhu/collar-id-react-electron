@@ -1,0 +1,622 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		212142D02CA5FB0200B261D3 /* CollarID_DashboardApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212142CF2CA5FB0200B261D3 /* CollarID_DashboardApp.swift */; };
+		212142D22CA5FB0200B261D3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212142D12CA5FB0200B261D3 /* ContentView.swift */; };
+		212142D42CA5FB0200B261D3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 212142D32CA5FB0200B261D3 /* Assets.xcassets */; };
+		212142D82CA5FB0200B261D3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 212142D72CA5FB0200B261D3 /* Preview Assets.xcassets */; };
+		212142E22CA5FB0300B261D3 /* CollarID_DashboardTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212142E12CA5FB0300B261D3 /* CollarID_DashboardTests.swift */; };
+		212142EC2CA5FB0300B261D3 /* CollarID_DashboardUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212142EB2CA5FB0300B261D3 /* CollarID_DashboardUITests.swift */; };
+		212142EE2CA5FB0300B261D3 /* CollarID_DashboardUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212142ED2CA5FB0300B261D3 /* CollarID_DashboardUITestsLaunchTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		212142DE2CA5FB0300B261D3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 212142C42CA5FB0200B261D3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 212142CB2CA5FB0200B261D3;
+			remoteInfo = "CollarID Dashboard";
+		};
+		212142E82CA5FB0300B261D3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 212142C42CA5FB0200B261D3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 212142CB2CA5FB0200B261D3;
+			remoteInfo = "CollarID Dashboard";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		212142CC2CA5FB0200B261D3 /* CollarID Dashboard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CollarID Dashboard.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		212142CF2CA5FB0200B261D3 /* CollarID_DashboardApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollarID_DashboardApp.swift; sourceTree = "<group>"; };
+		212142D12CA5FB0200B261D3 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		212142D32CA5FB0200B261D3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		212142D52CA5FB0200B261D3 /* CollarID_Dashboard.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CollarID_Dashboard.entitlements; sourceTree = "<group>"; };
+		212142D72CA5FB0200B261D3 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		212142DD2CA5FB0300B261D3 /* CollarID DashboardTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "CollarID DashboardTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		212142E12CA5FB0300B261D3 /* CollarID_DashboardTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollarID_DashboardTests.swift; sourceTree = "<group>"; };
+		212142E72CA5FB0300B261D3 /* CollarID DashboardUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "CollarID DashboardUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		212142EB2CA5FB0300B261D3 /* CollarID_DashboardUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollarID_DashboardUITests.swift; sourceTree = "<group>"; };
+		212142ED2CA5FB0300B261D3 /* CollarID_DashboardUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollarID_DashboardUITestsLaunchTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		212142C92CA5FB0200B261D3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		212142DA2CA5FB0300B261D3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		212142E42CA5FB0300B261D3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		212142C32CA5FB0200B261D3 = {
+			isa = PBXGroup;
+			children = (
+				212142CE2CA5FB0200B261D3 /* CollarID Dashboard */,
+				212142E02CA5FB0300B261D3 /* CollarID DashboardTests */,
+				212142EA2CA5FB0300B261D3 /* CollarID DashboardUITests */,
+				212142CD2CA5FB0200B261D3 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		212142CD2CA5FB0200B261D3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				212142CC2CA5FB0200B261D3 /* CollarID Dashboard.app */,
+				212142DD2CA5FB0300B261D3 /* CollarID DashboardTests.xctest */,
+				212142E72CA5FB0300B261D3 /* CollarID DashboardUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		212142CE2CA5FB0200B261D3 /* CollarID Dashboard */ = {
+			isa = PBXGroup;
+			children = (
+				212142CF2CA5FB0200B261D3 /* CollarID_DashboardApp.swift */,
+				212142D12CA5FB0200B261D3 /* ContentView.swift */,
+				212142D32CA5FB0200B261D3 /* Assets.xcassets */,
+				212142D52CA5FB0200B261D3 /* CollarID_Dashboard.entitlements */,
+				212142D62CA5FB0200B261D3 /* Preview Content */,
+			);
+			path = "CollarID Dashboard";
+			sourceTree = "<group>";
+		};
+		212142D62CA5FB0200B261D3 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				212142D72CA5FB0200B261D3 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		212142E02CA5FB0300B261D3 /* CollarID DashboardTests */ = {
+			isa = PBXGroup;
+			children = (
+				212142E12CA5FB0300B261D3 /* CollarID_DashboardTests.swift */,
+			);
+			path = "CollarID DashboardTests";
+			sourceTree = "<group>";
+		};
+		212142EA2CA5FB0300B261D3 /* CollarID DashboardUITests */ = {
+			isa = PBXGroup;
+			children = (
+				212142EB2CA5FB0300B261D3 /* CollarID_DashboardUITests.swift */,
+				212142ED2CA5FB0300B261D3 /* CollarID_DashboardUITestsLaunchTests.swift */,
+			);
+			path = "CollarID DashboardUITests";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		212142CB2CA5FB0200B261D3 /* CollarID Dashboard */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 212142F12CA5FB0300B261D3 /* Build configuration list for PBXNativeTarget "CollarID Dashboard" */;
+			buildPhases = (
+				212142C82CA5FB0200B261D3 /* Sources */,
+				212142C92CA5FB0200B261D3 /* Frameworks */,
+				212142CA2CA5FB0200B261D3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "CollarID Dashboard";
+			productName = "CollarID Dashboard";
+			productReference = 212142CC2CA5FB0200B261D3 /* CollarID Dashboard.app */;
+			productType = "com.apple.product-type.application";
+		};
+		212142DC2CA5FB0300B261D3 /* CollarID DashboardTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 212142F42CA5FB0300B261D3 /* Build configuration list for PBXNativeTarget "CollarID DashboardTests" */;
+			buildPhases = (
+				212142D92CA5FB0300B261D3 /* Sources */,
+				212142DA2CA5FB0300B261D3 /* Frameworks */,
+				212142DB2CA5FB0300B261D3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				212142DF2CA5FB0300B261D3 /* PBXTargetDependency */,
+			);
+			name = "CollarID DashboardTests";
+			productName = "CollarID DashboardTests";
+			productReference = 212142DD2CA5FB0300B261D3 /* CollarID DashboardTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		212142E62CA5FB0300B261D3 /* CollarID DashboardUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 212142F72CA5FB0300B261D3 /* Build configuration list for PBXNativeTarget "CollarID DashboardUITests" */;
+			buildPhases = (
+				212142E32CA5FB0300B261D3 /* Sources */,
+				212142E42CA5FB0300B261D3 /* Frameworks */,
+				212142E52CA5FB0300B261D3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				212142E92CA5FB0300B261D3 /* PBXTargetDependency */,
+			);
+			name = "CollarID DashboardUITests";
+			productName = "CollarID DashboardUITests";
+			productReference = 212142E72CA5FB0300B261D3 /* CollarID DashboardUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		212142C42CA5FB0200B261D3 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					212142CB2CA5FB0200B261D3 = {
+						CreatedOnToolsVersion = 15.0;
+					};
+					212142DC2CA5FB0300B261D3 = {
+						CreatedOnToolsVersion = 15.0;
+						TestTargetID = 212142CB2CA5FB0200B261D3;
+					};
+					212142E62CA5FB0300B261D3 = {
+						CreatedOnToolsVersion = 15.0;
+						TestTargetID = 212142CB2CA5FB0200B261D3;
+					};
+				};
+			};
+			buildConfigurationList = 212142C72CA5FB0200B261D3 /* Build configuration list for PBXProject "CollarID Dashboard" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 212142C32CA5FB0200B261D3;
+			productRefGroup = 212142CD2CA5FB0200B261D3 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				212142CB2CA5FB0200B261D3 /* CollarID Dashboard */,
+				212142DC2CA5FB0300B261D3 /* CollarID DashboardTests */,
+				212142E62CA5FB0300B261D3 /* CollarID DashboardUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		212142CA2CA5FB0200B261D3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				212142D82CA5FB0200B261D3 /* Preview Assets.xcassets in Resources */,
+				212142D42CA5FB0200B261D3 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		212142DB2CA5FB0300B261D3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		212142E52CA5FB0300B261D3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		212142C82CA5FB0200B261D3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				212142D22CA5FB0200B261D3 /* ContentView.swift in Sources */,
+				212142D02CA5FB0200B261D3 /* CollarID_DashboardApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		212142D92CA5FB0300B261D3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				212142E22CA5FB0300B261D3 /* CollarID_DashboardTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		212142E32CA5FB0300B261D3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				212142EC2CA5FB0300B261D3 /* CollarID_DashboardUITests.swift in Sources */,
+				212142EE2CA5FB0300B261D3 /* CollarID_DashboardUITestsLaunchTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		212142DF2CA5FB0300B261D3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 212142CB2CA5FB0200B261D3 /* CollarID Dashboard */;
+			targetProxy = 212142DE2CA5FB0300B261D3 /* PBXContainerItemProxy */;
+		};
+		212142E92CA5FB0300B261D3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 212142CB2CA5FB0200B261D3 /* CollarID Dashboard */;
+			targetProxy = 212142E82CA5FB0300B261D3 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		212142EF2CA5FB0300B261D3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		212142F02CA5FB0300B261D3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		212142F22CA5FB0300B261D3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "CollarID Dashboard/CollarID_Dashboard.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"CollarID Dashboard/Preview Content\"";
+				DEVELOPMENT_TEAM = A35W4MM59Y;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.resenv.CollarID-Dashboard";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		212142F32CA5FB0300B261D3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "CollarID Dashboard/CollarID_Dashboard.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"CollarID Dashboard/Preview Content\"";
+				DEVELOPMENT_TEAM = A35W4MM59Y;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.resenv.CollarID-Dashboard";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		212142F52CA5FB0300B261D3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = A35W4MM59Y;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.resenv.CollarID-DashboardTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CollarID Dashboard.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/CollarID Dashboard";
+			};
+			name = Debug;
+		};
+		212142F62CA5FB0300B261D3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = A35W4MM59Y;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.resenv.CollarID-DashboardTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CollarID Dashboard.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/CollarID Dashboard";
+			};
+			name = Release;
+		};
+		212142F82CA5FB0300B261D3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = A35W4MM59Y;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.resenv.CollarID-DashboardUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "CollarID Dashboard";
+			};
+			name = Debug;
+		};
+		212142F92CA5FB0300B261D3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = A35W4MM59Y;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.resenv.CollarID-DashboardUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "CollarID Dashboard";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		212142C72CA5FB0200B261D3 /* Build configuration list for PBXProject "CollarID Dashboard" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				212142EF2CA5FB0300B261D3 /* Debug */,
+				212142F02CA5FB0300B261D3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		212142F12CA5FB0300B261D3 /* Build configuration list for PBXNativeTarget "CollarID Dashboard" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				212142F22CA5FB0300B261D3 /* Debug */,
+				212142F32CA5FB0300B261D3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		212142F42CA5FB0300B261D3 /* Build configuration list for PBXNativeTarget "CollarID DashboardTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				212142F52CA5FB0300B261D3 /* Debug */,
+				212142F62CA5FB0300B261D3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		212142F72CA5FB0300B261D3 /* Build configuration list for PBXNativeTarget "CollarID DashboardUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				212142F82CA5FB0300B261D3 /* Debug */,
+				212142F92CA5FB0300B261D3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 212142C42CA5FB0200B261D3 /* Project object */;
+}

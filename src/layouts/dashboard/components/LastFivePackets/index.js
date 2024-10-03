@@ -31,6 +31,8 @@ import { FaShoppingCart } from "react-icons/fa";
 import { BsCreditCardFill } from "react-icons/bs";
 import { SiDropbox } from "react-icons/si";
 import { BsXCircleFill } from "react-icons/bs";
+import { RiRedPacketFill } from "react-icons/ri";
+
 
 
 // Vision UI Dashboard React example components
@@ -40,12 +42,12 @@ import AdobeXD from "examples/Icons/AdobeXD";
 // Vision UI Dashboard theme imports
 import palette from "assets/theme/base/colors";
 
-function OrderOverview({staticObstructed, dynamicObstructed, outsideDetection}) {
+function LastFivePackets({lastFivePackets}) {
   return (
     <Card className="h-100">
       <VuiBox mb="16px">
         <VuiTypography variant="lg" fontWeight="bold" mb="5px" color="white">
-          Particulate Information
+          Recent packets
         </VuiTypography>
         <VuiBox mb={2}>
           <VuiBox display="flex" alignItems="center">
@@ -54,13 +56,25 @@ function OrderOverview({staticObstructed, dynamicObstructed, outsideDetection}) 
               +30%
             </VuiTypography>{" "} */}
             <VuiTypography variant="button" color="text" fontWeight="regular">
-              Displaying data from the particulate sensors
+              Displaying data from the last five packets received
             </VuiTypography>
           </VuiBox>
         </VuiBox>
       </VuiBox>
       <VuiBox>
-        <TimelineItem
+      {lastFivePackets.length > 0 ? (
+        lastFivePackets.map((item, index) => (
+          <TimelineItem
+            key={index}
+            icon={<RiRedPacketFill color="white" size="16px" />}
+            title={`UID: ${item[0].header.systemUid}`}
+            dateTime={`Received at: ${item[1]}`}
+          />
+        ))
+      ) : (
+        "N/A"
+      )}
+        {/* <TimelineItem
           icon={staticObstructed ? <BsCheckCircleFill color="red" size="16px"/> : <BsXCircleFill color="green" size="16px"/>}
           title="Particulate static obstructed"
           dateTime="Is the particulate obstructed by a static object"
@@ -74,7 +88,7 @@ function OrderOverview({staticObstructed, dynamicObstructed, outsideDetection}) 
           icon={staticObstructed ? <BsCheckCircleFill color="red" size="16px"/> : <BsXCircleFill color="green" size="16px"/>}
           title="Particulate outside detection limits"
           dateTime="Is the particulate outside detection limits"
-        />
+        /> */}
         {/* <TimelineItem
           icon={<BsCreditCardFill size="16px" color={palette.warning.main} />}
           title="New card added for order #4395133"
@@ -91,4 +105,4 @@ function OrderOverview({staticObstructed, dynamicObstructed, outsideDetection}) 
   );
 }
 
-export default OrderOverview;
+export default LastFivePackets;

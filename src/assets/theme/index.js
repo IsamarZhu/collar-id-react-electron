@@ -132,7 +132,7 @@ export default createTheme({
     MuiStepConnector: { ...stepConnector },
     MuiStepLabel: { ...stepLabel },
     MuiStepIcon: { ...stepIcon },
-    MuiSelect: { ...select },
+    // MuiSelect: { ...select },
     MuiFormControlLabel: { ...formControlLabel },
     MuiFormLabel: { ...formLabel },
     MuiCheckbox: { ...checkbox },

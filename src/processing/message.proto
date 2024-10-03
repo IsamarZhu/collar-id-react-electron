@@ -19,7 +19,8 @@ message SystemInfoPacket{
     SimpleSensorReading simple_sensor_reading = 1;
     bool device_engaged = 2;
     SDCardState sdcard_state = 3;
-    BatteryState battery_state = 5;
+    BatteryState battery_state = 4;
+    optional GPSData gps_data = 5;
 }
 
 message ConfigPacket{
@@ -31,6 +32,14 @@ message ConfigPacket{
     bool enable_light = 6;
     bool enable_motion = 7;
     bool enable_lora = 8;
+}
+
+message GPSData{
+    float latitude = 1;
+    float longitude = 2;
+    float altitude = 3;
+    float speed = 4;
+    float heading = 5;
 }
 
 message BatteryState{
@@ -63,7 +72,7 @@ message SimpleSensorReading{
 }
 
 message SDCardState{
-    uint64 space_remaining = 1;
+    uint32 space_remaining = 1;
 }
 
 message AckPacket{

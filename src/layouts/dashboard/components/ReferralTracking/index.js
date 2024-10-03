@@ -82,11 +82,11 @@ function ReferralTracking({charging, voltage, percentage}) {
 									maxWidth: '100% !important'
 								}
 							})}>
-							<VuiTypography color='text' variant='button' fontWeight='regular' mb='5px'>
+							<VuiTypography color='white' variant='button' fontWeight='regular' mb='5px'>
 								Charging
 							</VuiTypography>
-							<VuiTypography color='white' variant='lg' fontWeight='bold'>
-								{charging ? charging : "N/A"}
+							<VuiTypography color={charging ? 'success' : 'error'} variant='lg' fontWeight='bold'>
+								{charging ? "True" : "False"}
 							</VuiTypography>
 						</VuiBox>
 						<VuiBox
@@ -109,8 +109,17 @@ function ReferralTracking({charging, voltage, percentage}) {
 								Voltage
 							</VuiTypography>
 							<VuiTypography color='white' variant='lg' fontWeight='bold'>
-								{Number(voltage).toFixed(2) ? Number(voltage).toFixed(2) : "N/A"}
+									{Number(voltage).toFixed(2) ? Number(voltage).toFixed(2) + "\ " : "N/A"} V
 							</VuiTypography>
+							{/* <VuiBox display="flex" alignItems="center">
+								<VuiTypography color='white' variant='lg' fontWeight='bold'>
+									{Number(voltage).toFixed(2) ? Number(voltage).toFixed(2) + "\ " : "N/A"} V
+								</VuiTypography>
+								<VuiTypography color='text' variant='caption' fontWeight='regular'>
+								{"\ V"}
+								</VuiTypography>
+							</VuiBox> */}
+							
 						</VuiBox>
 					</Stack>
 					<VuiBox sx={{ position: 'relative', display: 'inline-flex' }}>
