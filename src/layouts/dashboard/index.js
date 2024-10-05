@@ -216,6 +216,8 @@ function Dashboard() {
         console.log("newTemp ", newTemp)
         // setTemperatureLineChartData((prevData) => [...prevData, [0, 1]]);
 
+        console.log("test triggering electron build workflow")
+
         // Update state using ref to always reference the latest array
         setTemperatureLineChartData([...temperatureDataRef.current, [Number(packetEpochBigInt), newTemp]]);
         setHumidityLineChartData([...humidityDataRef.current, [Number(packetEpochBigInt), newHumidity]]);
