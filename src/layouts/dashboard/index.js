@@ -185,7 +185,8 @@ function Dashboard() {
         // const newDateSec = new Date(packetEpoch); // If epoch is in seconds, multiply by 1000
 
         // Get the epoch time from the packet
-        const packetEpochBigInt = getNumFromLong(packet.header.epoch);
+        // const packetEpochBigInt = getNumFromLong(packet.header.epoch); TODO add back when proto times are correct
+        const packetEpochBigInt = (new Date()).getTime()
 
         console.log("packet.systemInfoPacket.sdcardState.spaceRemaining ", packet.systemInfoPacket.sdcardState.spaceRemaining)
 
@@ -193,7 +194,8 @@ function Dashboard() {
         const packetEpochInMs = Number(packetEpochBigInt) * 1000;
 
         // Create Date object
-        const newDate = new Date(packetEpochInMs);
+        const newDate = new Date(packetEpochInMs); // TODO add back when recieving correct times from proto
+        // const newDate = new Date()
 
         console.log("packetEpoch (BigInt): ", packetEpochBigInt);
         console.log("packetEpochInMs ", packetEpochInMs);
@@ -208,7 +210,7 @@ function Dashboard() {
         const newGas = packet.systemInfoPacket.simpleSensorReading.gas;
         const newPm = packet.systemInfoPacket.simpleSensorReading.pm2_5;
         const newLight = packet.systemInfoPacket.simpleSensorReading.light;
-        const newActivity = packet.systemInfoPacket.simpleSensorReading.activity;
+        const newActivity = packet.systemInfoPacket.simpleSensorReading.activity; // ENUM to display text
         const newSteps = packet.systemInfoPacket.simpleSensorReading.steps;
 
         console.log("newTemp ", newTemp)

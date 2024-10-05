@@ -22,7 +22,9 @@ module.exports = {
     },
     {
       name: '@electron-forge/maker-squirrel',
-      config: {},
+      config: {
+        name: 'collarid_app', // Windows application name
+      }
     },
     {
       name: '@electron-forge/maker-zip',

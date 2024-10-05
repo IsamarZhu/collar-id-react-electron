@@ -1,0 +1,30 @@
+name: Build Electron App
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+
+      - run: npm install
+
+      - name: Build Electron App
+        run: npm run build
+
+      - name: Make distributable
+        run: npx electron-builder --${{ matrix.os }}

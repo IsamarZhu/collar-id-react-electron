@@ -18,6 +18,8 @@
 
 # output
 /out
+/dist/win-unpacked
+/dist/resenv-product*
 
 npm-debug.log*
 yarn-debug.log*

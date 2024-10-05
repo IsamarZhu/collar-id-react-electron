@@ -1,0 +1,21 @@
+directories:
+  output: dist
+  buildResources: build
+appId: com.electron.collarid
+productName: resenv-product-name
+asar: false
+mac:
+  target:
+    - pkg
+  entitlements: entitlements.mac.plist
+win:
+  target:
+    - target: zip
+      arch:
+        - x64
+    - target: msi
+      arch:
+        - x64
+extends: null
+files: []
+electronVersion: 32.1.2
