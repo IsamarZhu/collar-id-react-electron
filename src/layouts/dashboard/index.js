@@ -428,8 +428,16 @@ function Dashboard() {
             <Grid item xs={12} md={6} xl={3}>
               <MiniStatisticsCard
                 title={{ text: "Activity" }}
-                count={currentPacket ?
-                  currentPacket.systemInfoPacket.simpleSensorReading.activity : "N/A"
+                count={
+                  currentPacket
+                    ? currentPacket.systemInfoPacket.simpleSensorReading.activity === 0
+                      ? "Still"
+                      : currentPacket.systemInfoPacket.simpleSensorReading.activity === 1
+                      ? "Walk"
+                      : currentPacket.systemInfoPacket.simpleSensorReading.activity === 2
+                      ? "Run"
+                      : "Unknown"
+                    : "N/A"
                 }
                 percentage={{ color: packetDiff && packetDiff["activity"] > 0 ? "success" : "error", text: currentPacket && lastFivePackets.length > 1 && lastFivePackets[lastFivePackets.length - 1][0]
                   ? (packetDiff["activity"])
@@ -457,7 +465,7 @@ function Dashboard() {
               <WelcomeMark />
             </Grid>
             <Grid item xs={12} lg={6} xl={3}>
-              <SatisfactionRate value={currentPacket ? (currentPacket.systemInfoPacket.sdcardState.spaceRemaining * 0.001).toFixed(4) : "N/A"} />
+              <SatisfactionRate value={currentPacket ? (currentPacket.systemInfoPacket.sdcardState.spaceRemaining * 0.001).toFixed(4) : "N/A"} total={currentPacket ? (currentPacket.systemInfoPacket.sdcardState.totalSpace * 0.001).toFixed(4) : "N/A"}/>
             </Grid>
             <Grid item xs={12} lg={6} xl={4}>
               <ReferralTracking charging={currentPacket ? currentPacket.systemInfoPacket.batteryState.charging : false}

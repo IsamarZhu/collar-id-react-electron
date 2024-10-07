@@ -2,12 +2,16 @@ directories:
   output: dist
   buildResources: build
 appId: com.electron.collarid
-productName: resenv-product-name
-asar: false
-mac:
-  target:
-    - pkg
-  entitlements: entitlements.mac.plist
+productName: resenv-collarid-app
+asar: true
+asarUnpack:
+  - '**/*.node'
+extraMetadata:
+  main: src/electron-starter.js
+files:
+  - filter:
+      - build/**/*
+      - src/electron-starter.js
 win:
   target:
     - target: zip
@@ -17,5 +21,4 @@ win:
       arch:
         - x64
 extends: null
-files: []
 electronVersion: 32.1.2

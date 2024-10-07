@@ -10,6 +10,11 @@ const url = require('url');
 const { getCurrentPacket, initProcessProto, listSerialPorts } = require('./processing/processProto');  // Import the processing logic
 const { SerialPort } = require('serialport')
 
+module.paths.push(path.resolve('node_modules'));
+module.paths.push(path.resolve('../node_modules'));
+module.paths.push(path.resolve(__dirname, '..', '..', '..', '..', 'resources', 'app', 'node_modules'));
+module.paths.push(path.resolve(__dirname, '..', '..', '..', '..', 'resources', 'app.asar', 'node_modules'));
+
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -38,6 +43,17 @@ function createWindow() {
         slashes: true
     });
     mainWindow.loadURL(startUrl);
+
+    // mainWindow.webContents.executeJavaScript(`
+    //     var path = require('path');
+    //     module.paths.push(path.resolve('node_modules'));
+    //     module.paths.push(path.resolve('../node_modules'));
+    //     module.paths.push(path.resolve(__dirname, '..', '..', 'electron', 'node_modules'));
+    //     module.paths.push(path.resolve(__dirname, '..', '..', 'electron.asar', 'node_modules'));
+    //     module.paths.push(path.resolve(__dirname, '..', '..', 'app', 'node_modules'));
+    //     module.paths.push(path.resolve(__dirname, '..', '..', 'app.asar', 'node_modules'));
+    //     path = undefined;
+    //   `);
 
     // Open the DevTools.
     mainWindow.webContents.openDevTools();

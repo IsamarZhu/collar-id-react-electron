@@ -10,7 +10,7 @@ import colors from 'assets/theme/base/colors';
 import linearGradient from 'assets/theme/functions/linearGradient';
 import CircularProgress from '@mui/material/CircularProgress';
 
-const SatisfactionRate = ({ value }) => {
+const SatisfactionRate = ({ value, total }) => {
 	const { info, gradients } = colors;
 	const { cardContent } = gradients;
 
@@ -25,7 +25,7 @@ const SatisfactionRate = ({ value }) => {
 				</VuiTypography>
 				<VuiBox sx={{ alignSelf: 'center', justifySelf: 'center', zIndex: '-1' }}>
 					<VuiBox sx={{ position: 'relative', display: 'inline-flex' }}>
-						<CircularProgress variant='determinate' value={100} size={180} color='info' />
+						<CircularProgress variant='determinate' value={(value/total)*100} size={180} color='info' />
 						<VuiBox
 							sx={{
 								top: 0,

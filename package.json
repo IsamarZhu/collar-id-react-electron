@@ -75,7 +75,7 @@
     "electron-dev": "ELECTRON_START_URL=http://localhost:3000 electron .",
     "package": "electron-forge package",
     "make": "electron-forge make",
-    "dist": "electron-builder"
+    "dist": "electron-builder --win"
   },
   "eslintConfig": {
     "extends": [
@@ -97,30 +97,31 @@
   },
   "build": {
     "appId": "com.electron.collarid",
-    "productName": "resenv-product-name",
-    "asar": false,
-    "mac": {
-      "target": [
-        "pkg"
-      ],
-      "entitlements": "entitlements.mac.plist"
+    "productName": "resenv-collarid-app",
+	"asar": true,
+	"asarUnpack": ["**/*.node"],
+    "directories": {
+      "buildResources": "build"
     },
+	"extraMetadata": {
+		"main": "src/electron-starter.js"
+	},
+	"files": [
+      "build/**/*",
+      "src/electron-starter.js"
+    ],
     "win": {
-      "target": [
-        {
-          "target": "zip",
-          "arch": [
-            "x64"
-          ]
-        },
-        {
-          "target": "msi",
-          "arch": [
-            "x64"
-          ]
-        }
-      ]
-    },
+		"target": [
+			{
+			"target": "zip",
+			"arch": ["x64"]
+			},
+			{
+			"target": "msi",
+			"arch": ["x64"]
+			}
+		]
+	},
 	"extends": null
   }
 }

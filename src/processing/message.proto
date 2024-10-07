@@ -73,6 +73,7 @@ message SimpleSensorReading{
 
 message SDCardState{
     uint32 space_remaining = 1;
+    uint32 total_space = 2;
 }
 
 message AckPacket{
