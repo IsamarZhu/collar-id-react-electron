@@ -475,18 +475,21 @@ function Dashboard() {
             </Grid>
           </Grid>
         </VuiBox>
-        <VuiBox mb={3}>
+        <VuiBox sx={{ height: "100%", paddingBottom: "20px" }}>
           <Grid container spacing={3}>
             
-            <Grid item xs={12} lg={6} xl={5}>
+            <Grid item xs={12} lg={6} xl={6}>
               {/* <LastFivePackets lastFivePackets={lastFivePackets}/> */}
               <Card>
-                <VuiBox sx={{ height: "100%" }}>
-                    <VuiTypography variant="lg" color="white" fontWeight="bold" mb="20px">
+                <VuiBox sx={{ height: "100%" }} >
+                  <VuiBox mb="10px">
+                    <VuiTypography variant="lg" color="white" fontWeight="bold" mb="40px">
                       Map Overview
                     </VuiTypography>
+                  </VuiBox>
+                   
 
-                    <VuiBox sx={{ borderRadius: "10px", height: "500px" }} mb="20px" >
+                    <VuiBox sx={{ height: "500px" }} mb="20px" >
                     < OfflineMap lastTenLocations={lastTenLocations}/>
                     </VuiBox>
                 </VuiBox>
@@ -633,7 +636,7 @@ function Dashboard() {
                 </VuiBox> 
               </Card> */}
             </Grid>
-            <Grid item xs={12} lg={6} xl={7}>
+            <Grid item xs={12} lg={6} xl={6}>
               {/* <Card>
                 <VuiBox sx={{ height: "100%" }}>
                   <VuiTypography variant="lg" color="white" fontWeight="bold" mb="5px">
@@ -675,24 +678,28 @@ function Dashboard() {
               <Card>
                 <VuiBox sx={{ height: "100%" }}>
                   <VuiBox display="flex" alignItems="center" justifyContent="space-between" mb="5px">
-                    <VuiTypography variant="lg" color="white" fontWeight="bold">
-                      {`${selectedChart.charAt(0).toUpperCase() + selectedChart.slice(1)} Overview`}
-                    </VuiTypography>
-                    <Select
-                      value={selectedChart}
-                      onChange={handleChartChange}
-                      bgColor="info"
-                      sx={{ width: '140px' }}
-                    >
-                      <MenuItem value="temperature">Temperature</MenuItem>
-                      <MenuItem value="humidity">Humidity</MenuItem>
-                      <MenuItem value="pressure">Pressure</MenuItem>
-                      <MenuItem value="gas">Gas</MenuItem>
-                      <MenuItem value="pm">Particulate Matter</MenuItem>
-                      <MenuItem value="light">Light</MenuItem>
-                      <MenuItem value="activity">Activity</MenuItem>
-                      <MenuItem value="steps">Steps</MenuItem>
-                    </Select>
+                    <VuiBox>
+                      <VuiTypography variant="lg" color="white" fontWeight="bold">
+                        {`${selectedChart.charAt(0).toUpperCase() + selectedChart.slice(1)} Overview`}
+                      </VuiTypography>
+                    </VuiBox>
+                    <VuiBox sx={{ width: '230px' }}>
+                      <Select
+                        value={selectedChart}
+                        onChange={handleChartChange}
+                        bgColor="info"
+                        sx={{ width: '40px' }}
+                      >
+                        <MenuItem value="temperature">Temperature</MenuItem>
+                        <MenuItem value="humidity">Humidity</MenuItem>
+                        <MenuItem value="pressure">Pressure</MenuItem>
+                        <MenuItem value="gas">Gas</MenuItem>
+                        <MenuItem value="pm">Particulate Matter</MenuItem>
+                        <MenuItem value="light">Light</MenuItem>
+                        <MenuItem value="activity">Activity</MenuItem>
+                        <MenuItem value="steps">Steps</MenuItem>
+                      </Select>
+                    </VuiBox>
                   </VuiBox>
                   <VuiBox display="flex" alignItems="center" mb="40px">
                     <VuiTypography variant="button" color={packetDiff && packetDiff[selectedChart] > 0 ? "success" : "error"} fontWeight="bold">
@@ -704,7 +711,7 @@ function Dashboard() {
                       </VuiTypography>
                     </VuiTypography>
                   </VuiBox>
-                  <VuiBox sx={{ height: "310px" }}>
+                  <VuiBox sx={{ height: "420px" }}>
                     <LineChart
                       lineChartData={lineChartData()}
                       lineChartOptions={lineChartOptionsDashboard}

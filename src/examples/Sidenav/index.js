@@ -175,7 +175,7 @@ function Sidenav({ color, brandName, routes, ...rest }) {
               })
             }
           >
-            <VuiBox
+            {/* <VuiBox
               display="flex"
               sx={
                 ((theme) => sidenavLogoLabel(theme, { miniSidenav, transparentSidenav }),
@@ -185,7 +185,7 @@ function Sidenav({ color, brandName, routes, ...rest }) {
               }
             >
               <SimmmpleLogo size="24px" />
-            </VuiBox>
+            </VuiBox> */}
             <VuiTypography
               variant="button"
               textGradient={true}

@@ -138,14 +138,12 @@ export default function App() {
         <CssBaseline />
         {layout === "dashboard" && (
           <>
-            {/* <Sidenav
+            <Sidenav
               color={sidenavColor}
-              brand=""
-              brandName="VISION UI FREE"
               routes={routes}
               onMouseEnter={handleOnMouseEnter}
               onMouseLeave={handleOnMouseLeave}
-            /> */}
+            />
             <Configurator />
             {configsButton}
           </>
@@ -162,14 +160,12 @@ export default function App() {
       <CssBaseline />
       {layout === "dashboard" && (
         <>
-          {/* <Sidenav
+          <Sidenav
             color={sidenavColor}
-            brand=""
-            brandName="VISION UI FREE"
             routes={routes}
             onMouseEnter={handleOnMouseEnter}
             onMouseLeave={handleOnMouseLeave}
-          /> */}
+          />
           <Configurator />
           {configsButton}
         </>
