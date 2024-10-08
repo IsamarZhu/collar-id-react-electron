@@ -479,7 +479,18 @@ function Dashboard() {
           <Grid container spacing={3}>
             
             <Grid item xs={12} lg={6} xl={5}>
-              <LastFivePackets lastFivePackets={lastFivePackets}/>
+              {/* <LastFivePackets lastFivePackets={lastFivePackets}/> */}
+              <Card>
+                <VuiBox sx={{ height: "100%" }}>
+                    <VuiTypography variant="lg" color="white" fontWeight="bold" mb="20px">
+                      Map Overview
+                    </VuiTypography>
+
+                    <VuiBox sx={{ borderRadius: "10px", height: "500px" }} mb="20px" >
+                    < OfflineMap lastTenLocations={lastTenLocations}/>
+                    </VuiBox>
+                </VuiBox>
+              </Card>
               {/* <Card>
                 <VuiBox>
                 <VuiTypography variant="lg" color="white" fontWeight="bold" mb="5px">
@@ -623,7 +634,7 @@ function Dashboard() {
               </Card> */}
             </Grid>
             <Grid item xs={12} lg={6} xl={7}>
-              <Card>
+              {/* <Card>
                 <VuiBox sx={{ height: "100%" }}>
                   <VuiTypography variant="lg" color="white" fontWeight="bold" mb="5px">
                     {`${selectedChart.charAt(0).toUpperCase() + selectedChart.slice(1)} Overview`}
@@ -647,7 +658,7 @@ function Dashboard() {
                       }
                       lineChartOptions={lineChartOptionsDashboard}
                     />
-                  </VuiBox> */}
+                  </VuiBox> 
                   <VuiBox display="flex" alignItems="center" mb="20px" sx={{width: '200px'}}>
                     <Select value={selectedChart} onChange={handleChartChange} bgColor="info" sx={{width: '40px'}}>
                       <MenuItem value="temperature">Temperature</MenuItem>
@@ -659,6 +670,39 @@ function Dashboard() {
                       <MenuItem value="activity">Activity</MenuItem>
                       <MenuItem value="steps">Steps</MenuItem>
                     </Select>
+                  </VuiBox> */}
+
+              <Card>
+                <VuiBox sx={{ height: "100%" }}>
+                  <VuiBox display="flex" alignItems="center" justifyContent="space-between" mb="5px">
+                    <VuiTypography variant="lg" color="white" fontWeight="bold">
+                      {`${selectedChart.charAt(0).toUpperCase() + selectedChart.slice(1)} Overview`}
+                    </VuiTypography>
+                    <Select
+                      value={selectedChart}
+                      onChange={handleChartChange}
+                      bgColor="info"
+                      sx={{ width: '140px' }}
+                    >
+                      <MenuItem value="temperature">Temperature</MenuItem>
+                      <MenuItem value="humidity">Humidity</MenuItem>
+                      <MenuItem value="pressure">Pressure</MenuItem>
+                      <MenuItem value="gas">Gas</MenuItem>
+                      <MenuItem value="pm">Particulate Matter</MenuItem>
+                      <MenuItem value="light">Light</MenuItem>
+                      <MenuItem value="activity">Activity</MenuItem>
+                      <MenuItem value="steps">Steps</MenuItem>
+                    </Select>
+                  </VuiBox>
+                  <VuiBox display="flex" alignItems="center" mb="40px">
+                    <VuiTypography variant="button" color={packetDiff && packetDiff[selectedChart] > 0 ? "success" : "error"} fontWeight="bold">
+                      { currentPacket && lastFivePackets.length > 1 && lastFivePackets[lastFivePackets.length - 1][0]
+                        ? packetDiff[selectedChart]
+                        : "N/A" }
+                      <VuiTypography variant="button" color="text" fontWeight="regular">
+                        {" "} change since last packet
+                      </VuiTypography>
+                    </VuiTypography>
                   </VuiBox>
                   <VuiBox sx={{ height: "310px" }}>
                     <LineChart
@@ -672,25 +716,21 @@ function Dashboard() {
           </Grid>
         </VuiBox>
         <Grid container spacing={3} direction="row" justifyContent="center" alignItems="stretch">
-          <Grid item xs={12} md={6} lg={8}>
-          <Card>
-                <VuiBox sx={{ height: "100%" }}>
+          <Grid item xs={12} md={6} lg={6}>
+          {/* <Card> */}
+                {/* <VuiBox sx={{ height: "100%" }}>
                   <VuiTypography variant="lg" color="white" fontWeight="bold" mb="20px">
                     Map Overview
                   </VuiTypography>
 
                   <VuiBox sx={{ borderRadius: "10px", height: "500px" }} mb="20px" >
-                  {/* <VuiTypography color="white" variant="lg" mb="6px" gutterBottom>
-                    Projects
-                  </VuiTypography> */}
-                  {/* <Projects /> */}
-                  {/* <HeatMap heatMapData={heatMapDataDashboard} heatMapOptions={heatMapOptionsDashboard} /> */}
                   < OfflineMap lastTenLocations={lastTenLocations}/>
                   </VuiBox>
-              </VuiBox>
-            </Card>
+              </VuiBox> */}
+            <LastFivePackets lastFivePackets={lastFivePackets}/>
+            {/* </Card> */}
           </Grid>
-          <Grid item xs={12} md={6} lg={4}>
+          <Grid item xs={12} md={6} lg={6}>
             <OrderOverview staticObstructed={currentPacket ? currentPacket.systemInfoPacket.simpleSensorReading.particulateStaticObstructed : false}
             dynamicObstructed={currentPacket ? currentPacket.systemInfoPacket.simpleSensorReading.particulateDynamicObstructed : false}
             particulateOutsideDetectionLimits={currentPacket ? currentPacket.systemInfoPacket.simpleSensorReading.particulateOutsideDetectionLimits : false}/>
