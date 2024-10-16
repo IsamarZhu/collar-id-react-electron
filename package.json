@@ -62,7 +62,8 @@
     "electron": "^32.0.2",
     "electron-builder": "^25.1.7",
     "eslint": "^7.11.0",
-    "react-scripts": "5.0.1"
+    "react-scripts": "5.0.1",
+	"electron-updater": "6.1.3"
   },
   "main": "src/electron-starter.js",
   "scripts": {
@@ -75,7 +76,7 @@
     "electron-dev": "ELECTRON_START_URL=http://localhost:3000 electron .",
     "package": "electron-forge package",
     "make": "electron-forge make",
-    "dist": "electron-builder --win"
+    "dist": "electron-builder --win --x64"
   },
   "eslintConfig": {
     "extends": [
@@ -106,9 +107,14 @@
 	"extraMetadata": {
 		"main": "src/electron-starter.js"
 	},
+	"buildDependenciesFromSource": true,
+	"npmRebuild": "false",
 	"files": [
       "build/**/*",
-      "src/electron-starter.js"
+      "src/electron-starter.js",
+	  "node_modules/serialport/**/*",
+	  "src/**/*",
+	  "processing/**/*"
     ],
     "win": {
 		"target": [

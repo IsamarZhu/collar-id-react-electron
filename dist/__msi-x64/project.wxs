@@ -68,7 +68,6 @@
     <Directory Id="d76wJWzDhUNK2d0ZV1r57uw" Name="APPLICATIONFOLDER:\resources\app.asar.unpacked\node_modules\@serialport\bindings-cpp\prebuilds\android-arm\"/>
     <Directory Id="djnGMB7tyln3qBlalxcocKA" Name="APPLICATIONFOLDER:\resources\app.asar.unpacked\node_modules\@serialport\bindings-cpp\dist\"/>
     <Directory Id="d3JbHkUs1EEiVeMQaYiqw7A" Name="APPLICATIONFOLDER:\resources\app.asar.unpacked\node_modules\@serialport\bindings-cpp\build\node_gyp_bins\"/>
-    <Directory Id="daYb8U7r81ieXjV.X0B1FSg" Name="APPLICATIONFOLDER:\resources\app.asar.unpacked\node_modules\@serialport\bindings-cpp\build\Release\"/>
     <Directory Id="dXnSQeeWu218k5_DQODW_Hw" Name="APPLICATIONFOLDER:\locales\"/>
 
     <ComponentGroup Id="ProductComponents" Directory="APPLICATIONFOLDER">
@@ -235,9 +234,6 @@
       </Component>
       <Component Directory="d3JbHkUs1EEiVeMQaYiqw7A">
         <File Name="python3" Source="$(var.appDir)/resources/app.asar.unpacked/node_modules/@serialport/bindings-cpp/build/node_gyp_bins/python3" ReadOnly="yes" KeyPath="yes"/>
-      </Component>
-      <Component Directory="daYb8U7r81ieXjV.X0B1FSg">
-        <File Name="bindings.node" Source="$(var.appDir)/resources/app.asar.unpacked/node_modules/@serialport/bindings-cpp/build/Release/bindings.node" ReadOnly="yes" KeyPath="yes"/>
       </Component>
       <Component Directory="dXnSQeeWu218k5_DQODW_Hw">
         <File Name="af.pak" Source="$(var.appDir)/locales/af.pak" ReadOnly="yes" KeyPath="yes"/>

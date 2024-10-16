@@ -8,10 +8,15 @@ asarUnpack:
   - '**/*.node'
 extraMetadata:
   main: src/electron-starter.js
+buildDependenciesFromSource: true
+npmRebuild: false
 files:
   - filter:
       - build/**/*
       - src/electron-starter.js
+      - node_modules/serialport/**/*
+      - src/**/*
+      - processing/**/*
 win:
   target:
     - target: zip

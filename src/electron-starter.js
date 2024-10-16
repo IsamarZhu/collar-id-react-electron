@@ -7,14 +7,14 @@ const BrowserWindow = electron.BrowserWindow;
 
 const path = require('path');
 const url = require('url');
-const { getCurrentPacket, initProcessProto, listSerialPorts } = require('./processing/processProto');  // Import the processing logic
-const { SerialPort } = require('serialport')
 
 module.paths.push(path.resolve('node_modules'));
 module.paths.push(path.resolve('../node_modules'));
 module.paths.push(path.resolve(__dirname, '..', '..', '..', '..', 'resources', 'app', 'node_modules'));
 module.paths.push(path.resolve(__dirname, '..', '..', '..', '..', 'resources', 'app.asar', 'node_modules'));
 
+const { getCurrentPacket, initProcessProto, listSerialPorts } = require('./processing/processProto');
+const { SerialPort } = require('serialport');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
