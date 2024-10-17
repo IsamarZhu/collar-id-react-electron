@@ -76,7 +76,7 @@
     "electron-dev": "ELECTRON_START_URL=http://localhost:3000 electron .",
     "package": "electron-forge package",
     "make": "electron-forge make",
-    "dist": "electron-builder --win --x64"
+    "dist": "electron-builder"
   },
   "eslintConfig": {
     "extends": [
@@ -109,6 +109,7 @@
 	},
 	"buildDependenciesFromSource": true,
 	"npmRebuild": "false",
+	"extends": null,
 	"files": [
       "build/**/*",
       "src/electron-starter.js",
@@ -128,6 +129,12 @@
 			}
 		]
 	},
-	"extends": null
+	"mac": {
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false,
+      "entitlements": "./entitlements.plist",
+      "entitlementsInherit": "./entitlements.plist",
+      "category": "public.app-category.developer-tools"
+   }
   }
 }

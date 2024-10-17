@@ -10,6 +10,7 @@ extraMetadata:
   main: src/electron-starter.js
 buildDependenciesFromSource: true
 npmRebuild: false
+extends: null
 files:
   - filter:
       - build/**/*
@@ -25,5 +26,10 @@ win:
     - target: msi
       arch:
         - x64
-extends: null
+mac:
+  hardenedRuntime: true
+  gatekeeperAssess: false
+  entitlements: ./entitlements.plist
+  entitlementsInherit: ./entitlements.plist
+  category: public.app-category.developer-tools
 electronVersion: 32.1.2
