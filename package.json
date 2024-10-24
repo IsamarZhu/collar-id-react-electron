@@ -66,7 +66,7 @@
     "electron": "electron .",
     "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install && npm start",
     "electron-dev": "ELECTRON_START_URL=http://localhost:3000 electron .",
-    "dist": "electron-builder"
+    "dist": "electron-builder --win --x64"
   },
   "eslintConfig": {
     "extends": [

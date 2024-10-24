@@ -2,19 +2,23 @@ const electron = require('electron');
 // Module to control application life.
 const app = electron.app;
 const ipcMain = electron.ipcMain;
+const dialog = electron.dialog;
 // Module to create native browser window.
 const BrowserWindow = electron.BrowserWindow;
 
 const path = require('path');
 const url = require('url');
+const fs = require('fs');
 
 module.paths.push(path.resolve('node_modules'));
 module.paths.push(path.resolve('../node_modules'));
 module.paths.push(path.resolve(__dirname, '..', '..', '..', '..', 'resources', 'app', 'node_modules'));
 module.paths.push(path.resolve(__dirname, '..', '..', '..', '..', 'resources', 'app.asar', 'node_modules'));
 
-const { getCurrentPacket, initProcessProto, listSerialPorts } = require('./processing/processProto');
+const { getCurrentPacket, initProcessProto, listSerialPorts, saveToCsv } = require('./processing/processProto');
 const { SerialPort } = require('serialport');
+
+let filePath = null; // store global filepath
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -58,6 +62,58 @@ function createWindow() {
     // Open the DevTools.
     mainWindow.webContents.openDevTools();
 
+    mainWindow.webContents.on('did-finish-load', async () => {
+        if (!filePath) {
+            const { filePaths } = await dialog.showOpenDialog(mainWindow, {
+                title: 'Select Folder to Save CSV',
+                message: 'Please select a folder to save the CSV file containing device data',
+                properties: ['openDirectory']
+            });
+
+            if (filePaths && filePaths.length > 0) {
+                const selectedFolder = filePaths[0];
+                // const currentDateTime = new Date().toLocaleString().replace(/[/,:\s]/g, '-');
+                // console.log(new Date().toLocaleString());
+
+                // Get the current date and time
+                const now = new Date();
+                const month = String(now.getMonth() + 1).padStart(2, '0'); // getMonth is 0-indexed
+                const day = String(now.getDate()).padStart(2, '0');
+                const year = now.getFullYear();
+                const hours = String(now.getHours()).padStart(2, '0');
+                const minutes = String(now.getMinutes()).padStart(2, '0');
+                const seconds = String(now.getSeconds()).padStart(2, '0');
+
+                // Format as MM-DD-YYYY_HH:MM:SS
+                const currentDateTime = `${month}-${day}-${year}_${hours}:${minutes}:${seconds}`;
+                
+                console.log(currentDateTime);
+
+                filePath = path.join(selectedFolder, `data-${currentDateTime}.csv`);
+
+                const header = [
+                    'timeReceived', 'systemUid', 'msFromStart', 'epoch', 'packetIndex', 'requestAck',
+                    'temperature', 'humidity', 'pressure', 'gas', 'pm2_5', 'light', 'activity', 'steps',
+                    'particulateStaticObstructed', 'particulateDynamicObstructed', 'particulateOutsideDetectionLimits',
+                    'deviceEngaged', 'sdcardSpaceRemaining', 'sdcardTotalSpace',
+                    'batteryCharging', 'batteryVoltage', 'batteryPercentage',
+                    'gpsLatitude', 'gpsLongitude', 'gpsAltitude', 'gpsSpeed', 'gpsHeading',
+                    'radioRssi', 'radioSnr', 'radioRssiEst'
+                ];
+
+                // Create a new CSV file with the header row
+                fs.writeFileSync(filePath, header.join(',') + '\n', 'utf-8');
+                console.log(`CSV file created at: ${filePath}`);
+
+                // Initialize the serial port with the created window and file path
+                initProcessProto(mainWindow, filePath);
+
+                // Notify React of the file path if needed
+                // mainWindow.webContents.send('file-path-selected', filePath);
+            }
+        }
+    });
+
     // Emitted when the window is closed.
     mainWindow.on('closed', function () {
         // Dereference the window object, usually you would store windows
@@ -73,7 +129,7 @@ function createWindow() {
 app.on('ready', function () {
     createWindow()
     // Initialize the serial port with the created window
-    initProcessProto(mainWindow);
+    // initProcessProto(mainWindow, filePath);
 });
 
 // Quit when all windows are closed.

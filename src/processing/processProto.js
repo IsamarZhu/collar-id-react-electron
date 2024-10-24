@@ -7,6 +7,7 @@ const protobuf = require("protobufjs");
 const os = require('os');
 const path = require('path');
 const url = require('url');
+const fs = require('fs');
 
 let root;  // Global variable to hold the protobuf root
 let currentPacket;  // Global variable to store the current packet
@@ -25,7 +26,7 @@ protobuf.load(path.resolve(__dirname, 'message.proto'), (err, loadedRoot) => {
 let portPath;
 
 // Function to initialize the serial port
-function initProcessProto(mainWindow) {
+function initProcessProto(mainWindow, filePath) {
   console.log("in initProcessProto");
 
   // Determine the port path based on the OS
@@ -51,8 +52,22 @@ function initProcessProto(mainWindow) {
 
   // Listen for data from the serial port
   port.on('data', (data) => {
+    // const timeReceived = new Date().toLocaleString();
+
+    // Get the current date and time
+    const now = new Date();
+    const month = String(now.getMonth() + 1).padStart(2, '0'); // getMonth is 0-indexed
+    const day = String(now.getDate()).padStart(2, '0');
+    const year = now.getFullYear();
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+
+    // Format as MM-DD-YYYY_HH:MM:SS
+    const timeReceived = `${month}-${day}-${year}_${hours}.${minutes}.${seconds}`;
+
     console.log('Data received:', data.toString());
-    decodeAndPrintMessage(data, mainWindow);  // Pass mainWindow to decodeAndPrintMessage
+    decodeAndPrintMessage(data, mainWindow, filePath, timeReceived);  // Pass mainWindow to decodeAndPrintMessage
     // getCurrentPacket(data);
   });
 
@@ -62,7 +77,7 @@ function initProcessProto(mainWindow) {
   });
 }
 
-function decodeAndPrintMessage(dataBuffer, mainWindow) {
+function decodeAndPrintMessage(dataBuffer, mainWindow, filePath, timeReceived) {
   if (!root) {
     console.error('Protobuf definition not loaded');
     return;
@@ -85,6 +100,10 @@ function decodeAndPrintMessage(dataBuffer, mainWindow) {
 
     // Send the packet to the frontend
     mainWindow.webContents.send('packet-updated', packetObject);
+
+    // Store current packet in the csv
+
+    saveToCsv(packetObject, filePath, timeReceived);
 
 
     // // Check for SystemInfoPacket payload and handle it
@@ -124,8 +143,76 @@ function getCurrentPacket() {
   return currentPacket;
 }
 
+// Function to save Protobuf data into CSV file
+function saveToCsv(packetObject, csvFilePath, timeReceived) {
+  const header = [
+      'timeReceived', 'systemUid', 'msFromStart', 'epoch', 'packetIndex', 'requestAck',
+      'temperature', 'humidity', 'pressure', 'gas', 'pm2_5', 'light', 'activity', 'steps',
+      'particulateStaticObstructed', 'particulateDynamicObstructed', 'particulateOutsideDetectionLimits',
+      'deviceEngaged', 'sdcardSpaceRemaining', 'sdcardTotalSpace',
+      'batteryCharging', 'batteryVoltage', 'batteryPercentage',
+      'gpsLatitude', 'gpsLongitude', 'gpsAltitude', 'gpsSpeed', 'gpsHeading',
+      'radioRssi', 'radioSnr', 'radioRssiEst'
+  ];
 
-module.exports = { getCurrentPacket, initProcessProto, listSerialPorts };
+  // Check if the CSV file exists
+  console.log("csvFilePath ", csvFilePath)
+  if (fs.existsSync(csvFilePath)) {
+      // fs.writeFileSync(csvFilePath, header.join(',') + '\n', 'utf8');
+      // Extract values from packetObject, or write null if not available
+    const systemInfo = packetObject.systemInfoPacket || {};
+    const sensorReading = systemInfo.simpleSensorReading || {};
+    const sdcardState = systemInfo.sdcardState || {};
+    const batteryState = systemInfo.batteryState || {};
+    const gpsData = systemInfo.gpsData || {};
+    const radioPower = packetObject.radioPower || {};
+
+    const row = [
+        timeReceived || null,
+        packetObject.header.systemUid || null,
+        packetObject.header.msFromStart || null,
+        packetObject.header.epoch ? packetObject.header.epoch.low || null : null,
+        packetObject.header.packetIndex || null,
+        packetObject.header.requestAck ? "true" : "false",
+        sensorReading.temperature || null,
+        sensorReading.humidity || null,
+        sensorReading.pressure || null,
+        sensorReading.gas || null,
+        sensorReading.pm2_5 || null,
+        sensorReading.light || null,
+        sensorReading.activity || 0,
+        sensorReading.steps || 0,
+        sensorReading.particulateStaticObstructed ? "true" : "false",
+        sensorReading.particulateDynamicObstructed ? "true" : "false",
+        sensorReading.particulateOutsideDetectionLimits ? "true" : "false",
+        systemInfo.deviceEngaged ? "true" : "false",
+        sdcardState.spaceRemaining || null,
+        sdcardState.totalSpace || 0,
+        batteryState.charging ? "true" : "false",
+        batteryState.voltage || null,
+        batteryState.percentage || null,
+        gpsData.latitude || null,
+        gpsData.longitude || null,
+        gpsData.altitude || null,
+        gpsData.speed || null,
+        gpsData.heading || null,
+        radioPower.rssi || null,
+        radioPower.snr || null,
+        radioPower.rssiEst || null
+    ];
+
+    // Write the row to the CSV file
+    fs.appendFileSync(csvFilePath, row.join(',') + '\n', 'utf8');
+  }
+  else {
+    console.log("CSV file not created yet")
+  }
+
+  
+}
+
+
+module.exports = { getCurrentPacket, initProcessProto, listSerialPorts, saveToCsv };
 
 
 // const { SerialPort } = require('serialport'); 
